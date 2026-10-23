@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دفترچه یادداشت‌های فنی و عملیاتی چاه‌آزمایی (Well Testing Technical Notes)</title>
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- کتابخانه رندر فرمول‌های ریاضی KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --primary-light: #f0f9ff;
+            --primary-border: #bae6fd;
+            --dark-header: #0f172a;
+            --dark-surface: #1e293b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --border-strong: #cbd5e1;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --success: #10b981;
+            --success-bg: #ecfdf5;
+            --warning: #f59e0b;
+            --warning-bg: #fffbeb;
+            --warning-border: #fde68a;
+            --amber-text: #b45309;
+            --indigo: #6366f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding: 12px;
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        /* هدر اصلی برنامه */
+        .app-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 18px 20px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .app-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-title-icon {
+            background: rgba(2, 132, 199, 0.25);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .app-title h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+
+        .app-title p {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* نوار وضعیت ابری و همگام‌سازی */
+        .sync-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .sync-badge:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .sync-badge.online {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+
+        .sync-badge.syncing {
+            background: #dbeafe;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .sync-badge.offline {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94a3b8;
+            display: inline-block;
+        }
+
+        .sync-badge.online .status-dot {
+            background: #22c55e;
+            box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+        }
+
+        .sync-badge.syncing .status-dot {
+            background: #3b82f6;
+        }
+
+        .sync-badge.offline .status-dot {
+            background: #ef4444;
+        }
+
+        /* نوار تب‌ها */
+        .tabs {
+            display: flex;
+            background: #e2e8f0;
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: none;
+            background: none;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background-color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ابزارهای بالای لیست (جستجو و دکمه افزودن فاز) */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .search-container {
+            flex: 1;
+            min-width: 240px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 9px 36px 9px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            outline: none;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .action-primary-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .action-primary-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        /* کارت‌های فاز عملیات (Phase Card) */
+        .phase-block {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .phase-header {
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .phase-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .phase-number {
+            background: var(--dark-header);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .phase-title {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .phase-steps-count {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            background: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .phase-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-mini {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            cursor: pointer;
+            color: #475569;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-mini:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .btn-mini.danger:hover {
+            background: #fef2f2;
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+
+        /* ساختار دو ستونی هر مرحله (Operation Step Item) */
+        .steps-container {
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step-row {
+            background: white;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .step-row:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+        }
+
+        .step-row.completed {
+            background: #f8fafc;
+            border-color: #d1fae5;
+            opacity: 0.85;
+        }
+
+        .step-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #f1f5f9;
+        }
+
+        .step-title-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-check {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--success);
+        }
+
+        .step-seq-num {
+            font-weight: 800;
+            font-size: 0.82rem;
+            color: var(--primary);
+            background: #eff6ff;
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
+        .step-name {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* دو ستون مقایسه‌ای: گزارش رسمی در مقابل نکات عملیاتی */
+        .step-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .step-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .col-box {
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .col-report {
+            background: #f0f9ff;
+            border: 1px solid var(--primary-border);
+            color: #0c4a6e;
+        }
+
+        .col-tips {
+            background: #fffbeb;
+            border: 1px solid var(--warning-border);
+            color: #78350f;
+        }
+
+        .col-tag {
+            font-size: 0.72rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .col-report .col-tag {
+            color: #0369a1;
+        }
+
+        .col-tips .col-tag {
+            color: #b45309;
+        }
+
+        .col-content {
+            white-space: pre-line;
+            font-size: 0.83rem;
+        }
+
+        /* دکمه درج ردیف جدید بین ردیف‌ها */
+        .insert-divider {
+            text-align: center;
+            margin: -4px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-insert-between {
+            background: white;
+            border: 1px dashed #94a3b8;
+            color: #64748b;
+            font-size: 0.72rem;
+            padding: 2px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-insert-between:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #f0f9ff;
+            transform: scale(1.03);
+        }
+
+        /* تب فرمول‌های کاربردی */
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 14px;
+        }
+
+        .formula-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .formula-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+
+        .formula-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .formula-category {
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .math-display-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 10px;
+            text-align: center;
+            margin-bottom: 12px;
+            direction: ltr;
+            overflow-x: auto;
+            color: #0f172a;
+        }
+
+        .params-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin-top: 6px;
+        }
+
+        .params-table th, .params-table td {
+            padding: 5px 8px;
+            text-align: right;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .params-table th {
+            color: var(--text-muted);
+            font-weight: 700;
+            background: #fafafa;
+        }
+
+        .param-symbol {
+            font-family: monospace;
+            font-weight: bold;
+            color: #0284c7;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .param-unit {
+            color: #d97706;
+            font-weight: 700;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .formula-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        /* مدال‌ها و فرم‌های بازشونده */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 620px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: scale(0.96);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        input, textarea, select {
+            padding: 10px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #fafafa;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Toast پیام */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background: #0f172a;
+            color: #fff;
+            text-align: center;
+            border-radius: 25px;
+            padding: 10px 18px;
+            position: fixed;
+            z-index: 3000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 0.86rem;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .footer-tools {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: white;
+            border-radius: 14px;
+            border: 1.5px dashed var(--border);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- هدر بالای صفحه -->
+    <header class="app-header">
+        <div class="app-title">
+            <div class="app-title-icon">🛢️</div>
+            <div>
+                <h1>دفترچه فنی و عملیاتی چاه‌آزمایی (Well Testing)</h1>
+                <p>تطابق سکوئنس گزارش عملیات سر چاه با نکات کلیدی، چک‌لیست و فرمول‌ها</p>
+            </div>
+        </div>
+        <div id="sync-status" class="sync-badge" onclick="manualSync()" title="کلیک برای همگام‌سازی دستی با سرور ابری">
+            <span class="status-dot"></span> <span>در حال اتصال...</span>
+        </div>
+    </header>
+
+    <!-- نوار تب‌ها -->
+    <div class="tabs">
+        <button class="tab-btn active" id="btn-tab-ops" onclick="switchTab('ops')">
+            <span>📋</span>
+            <span>سکوئنس و نکات عملیاتی</span>
+        </button>
+        <button class="tab-btn" id="btn-tab-formulas" onclick="switchTab('formulas')">
+            <span>📐</span>
+            <span>فرمول‌های کاربردی چاه‌آزمایی</span>
+        </button>
+        <button class="tab-btn" id="btn-tab-lessons" onclick="switchTab('lessons')">
+            <span>💡</span>
+            <span>نکات عمومی و ایمنی سر چاه</span>
+        </button>
+    </div>
+
+    <!-- ================= تب اول: سکوئنس و نکات عملیاتی ================= -->
+    <div id="ops" class="tab-content active">
+        <div class="toolbar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="ops-search" placeholder="جستجو در گزارشات و نکات عملیاتی..." oninput="renderPhases()">
+            </div>
+            <button class="action-primary-btn" onclick="openAddPhaseModal()">
+                <span>➕</span>
+                <span>افزودن فاز عملیاتی جدید</span>
+            </button>
+        </div>
+
+        <div id="phases-list">
+            <!-- رندر پویا فازها و مراحل -->
+        </div>
+    </div>
+
+    <!-- ================= تب دوم: فرمول‌های کاربردی ================= -->
+    <div id="formulas" class="tab-content">
+        <div class="toolbar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="formula-search" placeholder="جستجو در نام یا پارامترهای فرمول..." oninput="renderFormulas()">
+            </div>
+            <button class="action-primary-btn" onclick="openAddFormulaModal()">
+                <span>➕</span>
+                <span>افزودن فرمول جدید</span>
+            </button>
+        </div>
+
+        <div id="formulas-list" class="formula-grid">
+            <!-- رندر پویا فرمول‌ها -->
+        </div>
+    </div>
+
+    <!-- ================= تب سوم: نکات ایمنی و درس‌آموخته‌ها ================= -->
+    <div id="lessons" class="tab-content">
+        <div class="toolbar">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="lessons-search" placeholder="جستجو در یادداشت‌ها..." oninput="renderLessons()">
+            </div>
+            <button class="action-primary-btn" onclick="openAddLessonModal()">
+                <span>➕</span>
+                <span>افزودن یادداشت جدید</span>
+            </button>
+        </div>
+
+        <div id="lessons-list" class="formula-grid">
+            <!-- رندر پویا یادداشت‌ها -->
+        </div>
+    </div>
+
+    <!-- ابزارهای پشتیبان‌گیری -->
+    <div class="footer-tools">
+        <button class="btn-mini" style="padding: 7px 14px; font-weight: 700;" onclick="exportData()">💾 دانلود پشتیبان داده‌ها (JSON)</button>
+        <button class="btn-mini" style="padding: 7px 14px; font-weight: 700;" onclick="document.getElementById('import-file').click()">📂 بازیابی فایل پشتیبان</button>
+        <button class="btn-mini" style="padding: 7px 14px; font-weight: 700; color: #b45309;" onclick="resetToSampleData()">🔄 بارگذاری مجدد اطلاعات نمونه چاه‌آزمایی</button>
+        <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importData(event)">
+    </div>
+</div>
+
+<!-- ================= مودال افزودن / ویرایش فاز ================= -->
+<div id="phase-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="phase-modal-title">افزودن فاز عملیاتی جدید</div>
+            <button class="modal-close" onclick="closePhaseModal()">&times;</button>
+        </div>
+        <form id="phase-form">
+            <input type="hidden" id="phase-id">
+            <div class="form-group">
+                <label>عنوان فاز عملیاتی *</label>
+                <input type="text" id="phase-name" placeholder="مثلاً: آماده‌سازی و چیدمان ادوات سطحی (Rig-Up)" required>
+            </div>
+            <div class="form-group">
+                <label>توضیحات کلی این فاز (اختیاری)</label>
+                <input type="text" id="phase-desc" placeholder="توضیح یا هدف مرحله...">
+            </div>
+            <button type="submit" class="btn-submit">ذخیره فاز</button>
+        </form>
+    </div>
+</div>
+
+<!-- ================= مودال افزودن / ویرایش مرحله (Step) ================= -->
+<div id="step-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="step-modal-title">افزودن گام عملیاتی جدید</div>
+            <button class="modal-close" onclick="closeStepModal()">&times;</button>
+        </div>
+        <form id="step-form">
+            <input type="hidden" id="step-phase-id">
+            <input type="hidden" id="step-id">
+            <input type="hidden" id="step-insert-index">
+            
+            <div class="form-group">
+                <label>عنوان مرحله عملیاتی *</label>
+                <input type="text" id="step-title" placeholder="مثلاً: تست فشار چوک منیفولد و خطوط جریان" required>
+            </div>
+            
+            <div class="form-group">
+                <label>📄 متن شکست کار و گزارش عملیات (ستون اول - آنچه در گزارش ذکر می‌شود) *</label>
+                <textarea id="step-report" rows="4" placeholder="توضیح رسمی عملیات: مثلاً بستن خطوط جریان، تزریق آب به فشار ۵۰۰۰ پام به مدت ۱۰ دقیقه و تست سلامت سیستم..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>💡 نکات کلیدی، فنی و اجرایی سر چاه (ستون دوم - آنچه سر چاه باید چک کنی و در گزارش نیست) *</label>
+                <textarea id="step-tips" rows="5" placeholder="نکات میدانی: مثلاً چک کردن جهت شلیک شیرهای اطمینان، محکم بستن کابل‌های مهار (Sling)، تخلیه هوای خط قبل از افزایش فشار، چک کردن کالیبره بودن فشارسنج چوک..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">ذخیره مرحله</button>
+        </form>
+    </div>
+</div>
+
+<!-- ================= مودال افزودن / ویرایش فرمول ================= -->
+<div id="formula-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="formula-modal-title">افزودن فرمول مهندسی چاه‌آزمایی</div>
+            <button class="modal-close" onclick="closeFormulaModal()">&times;</button>
+        </div>
+        <form id="formula-form">
+            <input type="hidden" id="formula-id">
+            
+            <div class="form-group">
+                <label>عنوان فرمول *</label>
+                <input type="text" id="form-formula-title" placeholder="مثلاً: نفوذپذیری سازند از شیب هورنر (Permeability)" required>
+            </div>
+
+            <div class="form-group">
+                <label>دسته‌بندی</label>
+                <input type="text" id="form-formula-cat" placeholder="مثلاً: Drawdown / Horner / Skin / Choke" value="Well Testing">
+            </div>
+
+            <div class="form-group">
+                <label>کد فرمول ریاضی به زبان لاتک (LaTeX) *</label>
+                <input type="text" id="form-formula-latex" placeholder="مثلاً: k = rac{162.6 \cdot q \cdot B \cdot \mu}{m \cdot h}" style="direction: ltr; font-family: monospace;" oninput="previewLatex()" required>
+                <small style="color: var(--text-muted); font-size: 0.72rem;">راهنما: خط کسری با rac{صورت}{مخرج} و ضرب با \cdot نوشته می‌شود.</small>
+            </div>
+
+            <!-- پیش‌نمایش زنده فرمول -->
+            <div class="form-group">
+                <label>پیش‌نمایش فرمول:</label>
+                <div id="latex-preview" class="math-display-box">پیش‌نمایش فرمول در اینجا نمایش داده می‌شود...</div>
+            </div>
+
+            <div class="form-group">
+                <label>معرفی پارامترها و واحدها (هر خط: نماد | نام | واحد) *</label>
+                <textarea id="form-formula-params" rows="5" placeholder="k | نفوذپذیری سازند | md&#10;q | دبی جریان سیال | STB/day&#10;B | ضریب حجم سازند سیال | bbl/STB&#10;mu | گرانروی سیال | cp&#10;m | شیب خط هورنر | psi/cycle&#10;h | ضخامت موثر لایه | ft" style="font-size: 0.8rem;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>نکات کاربرد / توضیحات تکمیلی</label>
+                <input type="text" id="form-formula-notes" placeholder="مثلاً: معتبر برای جریان شعاعی همگن و بی‌پایان">
+            </div>
+
+            <button type="submit" class="btn-submit">ذخیره فرمول</button>
+        </form>
+    </div>
+</div>
+
+<!-- ================= مودال افزودن / ویرایش نکته و یادداشت ================= -->
+<div id="lesson-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="lesson-modal-title">افزودن نکته فنی سر چاه</div>
+            <button class="modal-close" onclick="closeLessonModal()">&times;</button>
+        </div>
+        <form id="lesson-form">
+            <input type="hidden" id="lesson-id">
+            <div class="form-group">
+                <label>موضوع / عنوان نکته *</label>
+                <input type="text" id="lesson-title" placeholder="مثلاً: تمهیدات باز کردن چاه با گاز ترش H2S" required>
+            </div>
+            <div class="form-group">
+                <label>دسته‌بندی</label>
+                <input type="text" id="lesson-cat" placeholder="مثلاً: ایمنی / چوک / تفکیک‌گر / پکر" value="ایمنی و عملیات">
+            </div>
+            <div class="form-group">
+                <label>شرح کامل نکته و درس‌آموخته *</label>
+                <textarea id="lesson-desc" rows="6" placeholder="نکات اجرایی، تجربیات میدانی، موارد ممنوعه و هشدارهای مهم..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">ذخیره نکته</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast کپی یا موفقیت -->
+<div id="toast">عملیات با موفقیت انجام شد ✅</div>
+
+<script>
+    // آدرس دیتابیس ابری اختصاصی شما در Pantry (سبد اختصاصی برای Technical Notes بدون فیلتر در ایران)
+    const CLOUD_URL = atob("aHR0cHM6Ly9nZXRwYW50cnkuY2xvdWQvYXBpdjEvcGFudHJ5LzY3ZWFhMzBlLTBkZWMtNDc5Yi1hMzI0LWYzYWZjMmZmZGNkZi9iYXNrZXQvdGVjaG5pY2FsX25vdGVzX3dlbGx0ZXN0X3Yx");
+
+    // داده‌های نمونه و استاندارد اولیه چاه‌آزمایی (Well Testing)
+    const defaultPhases = [
+        {
+            id: 101,
+            name: "۱. آماده‌سازی، بستن خطوط و تست فشار سطحی (Rig-Up & Pressure Testing)",
+            desc: "چیدمان و تست کلیه تجهیزات سرچاهی، منیفولد، لوله‌های فشارقوی و تفکیک‌گر",
+            steps: [
+                {
+                    id: 1001,
+                    title: "چیدمان و لنگراندازی خطوط جریان سطحی",
+                    report: "بستن خطوط جریان از شیر سرچاهی تا چوک منیفولد، اتصال به تفکیک‌گر تستی و خطوط سوزاندن به گودال سوخت. محکم‌سازی اتصالات سطحی.",
+                    tips: "• اطمینان از چکش‌کاری درست چکسان‌ها (Chiksan) و عدم وجود تنش زاویه‌ای در خطوط.
+• مهار کردن تمام خطوط و شیلنگ‌های فلکسیبل با کابل ایمنی (Sling & Whipcheck).
+• بررسی راستای شلیک شیرهای اطمینان (PRV) به سمت ایمن و دور از پرسنل.",
+                    completed: false
+                },
+                {
+                    id: 1002,
+                    title: "تست هیدرواستاتیک خطوط سطحی (Surface Pressure Test)",
+                    report: "انجام تست فشار کم‌فشار (300 psi به مدت ۵ دقیقه) و تست پرفشار (5000 psi به مدت ۱۰ دقیقه) با آب صنعتی و ثبت کامل بر روی چارت‌ریدر.",
+                    tips: "• قبل از شروع افزایش فشار، تخلیه کامل حباب‌های هوای خطوط الزامی است.
+• برقراری منطقه حائل خطر (Red Zone) و خروج کامل پرسنل غیرضروری.
+• چک کردن سلامت گیج‌های سرچاه و همخوانی عدد چارت‌ریدر با گیج دیجیتال.",
+                    completed: false
+                }
+            ]
+        },
+        {
+            id: 102,
+            name: "۲. آماده‌سازی و راندن رشته ابزار درون‌چاهی (DST String RIH)",
+            desc: "کالیبراسیون سنسورها، بستن پکر، شیرهای آزمایش و راندن لوله‌ها",
+            steps: [
+                {
+                    id: 1003,
+                    title: "برنامه‌ریزی و نصب گیج‌های حافظه‌دار (Memory Gauges)",
+                    report: "برنامه‌ریزی و کالیبراسیون ۳ دستگاه گیج حافظه‌دار با نرخ ثبت پیوسته (مثلاً هر ۱ ثانیه)، نصب در محفظه گیج (Carrier) و بستن در رشته.",
+                    tips: "• کنترل دقیق ولتاژ باتری و تاریخ انقضا؛ هرگز باتری مشکوک را به چاه نفرستید.
+• سینک کردن تایم کامپیوتر دقیقاً با ساعت اتاق کنترل و ساعت سرچاه.
+• بازرسی اورینگ‌ها (O-Rings) و استفاده از گریس نسوز دما بالا برای دماهای چاه.",
+                    completed: false
+                },
+                {
+                    id: 1004,
+                    title: "تست فشار لوله‌ها در حین راندن (Pressure Test Tubing)",
+                    report: "راندن رشته تا عمق هدف با تست هیدرواستاتیک هر ۳۰ شاخه لوله تا ۳۵۰۰ پام با استفاده از شیر تست درون‌چاهی.",
+                    tips: "• ثبت و تطابق دقیق Tally لوله‌ها با حفار (Pipe Tally Check).
+• ثبت وزن رشته به هنگام بالا و پایین رفتن (Pick-up & Slack-off Weight) جهت تشخیص درگ چاه.
+• چک کردن تمیز بودن داخل لوله‌ها (Drifting) قبل از اتصال شاخه‌ها.",
+                    completed: false
+                }
+            ]
+        },
+        {
+            id: 103,
+            name: "۳. سوراخ‌کاری و باز چاه اولیه جهت تمیزکاری (Initial Flow & Clean-Up)",
+            desc: "شروع جریان سیال سازند، تخلیه گل و سیال حفاری و انتقال به تفکیک‌گر",
+            steps: [
+                {
+                    id: 1005,
+                    title: "باز کردن چاه با چوک متغیر کوچک",
+                    report: "شروع جریان با باز کردن چوک سایز 16/64 اینچ به سمت مشعل و گودال سوخت جهت ثبت فشار اولیه و تمیزکاری چاه.",
+                    tips: "• چوک را به آرامی و تدریجی باز کنید تا شوک فشاری به سازند وارد نشود و ماسه‌دهی (Sand Production) رخ ندهد.
+• استقرار نفر ایمنی مجهز به گازسنج H2S در جهت بادگیر مشعل.
+• پایش مداوم و همزمان فشار سرچاهی (WHP) و فشار پشت لوله (Casing/Annulus Pressure).",
+                    completed: false
+                },
+                {
+                    id: 1006,
+                    title: "هدایت جریان به تفکیک‌گر و نمونه‌گیری",
+                    report: "پس از تمیز شدن سیال و خروج گاز/نفت خالص، جریان به تفکیک‌گر هدایت شد. تنظیم فشار کاری تفکیک‌گر روی 250 psi.",
+                    tips: "• کنترل چشمی سایت‌گلس تفکیک‌گر جهت اطمینان از عملکرد شیر خودکار تخلیه سطح مایع (Dump Valve).
+• برداشت منظم نمونه سیال در فواصل ۲۰ دقیقه‌ای و اندازه‌گیری BSW، چگالی (API) و شوری (Salinity).
+• بررسی سایز و سلامت صفحه اوریفیس گاز (Orifice Plate) متناسب با نرخ جریان.",
+                    completed: false
+                }
+            ]
+        },
+        {
+            id: 104,
+            name: "۴. بستن چاه برای ثبت احیای فشار (Pressure Build-Up / PBU)",
+            desc: "بستن چاه و ثبت دقیق منحنی احیای فشار جهت ارزیابی نفوذپذیری و آسیب سازند",
+            steps: [
+                {
+                    id: 1007,
+                    title: "بستن نهایی چاه در سطح و آغاز PBU",
+                    report: "بستن چاه با شیر سرچاهی بالادست چوک در ساعت 14:00 و آغاز دوره ثبت احیای فشار به مدت ۲۴ ساعت کامل.",
+                    tips: "• بستن باید سریع و بدون لرزش خطوط انجام شود تا زمان شروع PBU دقیق ثبت گردد.
+• شیرهای خروجی تفکیک‌گر را ایزوله کنید تا تغییرات دما باعث خطای اندازه‌گیری نشود.
+• هرگونه نشتی احتمالی از سرچاه را با کف صابون چک کنید؛ نشتی کوچک افت فشار کاذب ایجاد می‌کند.",
+                    completed: false
+                }
+            ]
+        }
+    ];
+
+    const defaultFormulas = [
+        {
+            id: 201,
+            title: "نفوذپذیری موثر سازند از شیب هورنر (Horner Permeability)",
+            category: "تحلیل فشار هورنر",
+            latex: "k = \frac{162.6 \cdot q \cdot B \cdot \mu}{m \cdot h}",
+            params: [
+                { symbol: "k", name: "نفوذپذیری موثر سازند", unit: "md" },
+                { symbol: "q", name: "دبی جریان سیال", unit: "STB/day" },
+                { symbol: "B", name: "ضریب حجم سازند سیال (FVF)", unit: "bbl/STB" },
+                { symbol: "mu", name: "گرانروی سیال مخزن", unit: "cp" },
+                { symbol: "m", name: "شیب خط مستقیم هورنر", unit: "psi/cycle" },
+                { symbol: "h", name: "ضخامت موثر لایه مخزنی", unit: "ft" }
+            ],
+            notes: "معتبر برای سیال تراکم‌پذیر کم در جریان شعاعی همگن بی‌نهایت."
+        },
+        {
+            id: 202,
+            title: "ضریب آسیب سازند / پوسته (Skin Factor)",
+            category: "ارزیابی آسیب سازند",
+            latex: "s = 1.151 \left[ \frac{P_{1hr} - P_{wf}}{m} - \log\left( \frac{k}{\phi \cdot \mu \cdot c_t \cdot r_w^2} \right) + 3.23 \right]",
+            params: [
+                { symbol: "s", name: "ضریب پوسته (مثبت: آسیب، منفی: انگیزش)", unit: "بی بعد" },
+                { symbol: "P_1hr", name: "فشار احیا در زمان ۱ ساعت از خط هورنر", unit: "psi" },
+                { symbol: "P_wf", name: "فشار جریان چاه قبل از بستن", unit: "psi" },
+                { symbol: "phi", name: "تخلخل موثر سنگ مخزن", unit: "کسر (0-1)" },
+                { symbol: "c_t", name: "تراکم‌پذیری کل سیستم سنگ و سیال", unit: "psi⁻¹" },
+                { symbol: "r_w", name: "شعاع چاه حفاری‌شده", unit: "ft" }
+            ],
+            notes: "اگر s بزرگتر از صفر باشد یعنی آسیب حفاری وجود دارد و چاه نیاز به اسیدکاری دارد."
+        },
+        {
+            id: 203,
+            title: "افت فشار ناشی از پوسته (Skin Pressure Drop)",
+            category: "آسیب سازند",
+            latex: "\Delta P_{skin} = 0.869 \cdot m \cdot s",
+            params: [
+                { symbol: "Delta P_skin", name: "افت فشار اضافی در دهانه چاه ناشی از آسیب", unit: "psi" },
+                { symbol: "m", name: "شیب خط هورنر", unit: "psi/cycle" },
+                { symbol: "s", name: "ضریب پوسته", unit: "بی بعد" }
+            ],
+            notes: "نشان‌دهنده هدررفت فشار در اطراف چاه به علت گرفتگی خلل و فرج."
+        },
+        {
+            id: 204,
+            title: "شاخص بهره‌دهی چاه (Productivity Index - PI)",
+            category: "عملکرد تولید",
+            latex: "PI = \frac{q}{\bar{P}_R - P_{wf}}",
+            params: [
+                { symbol: "PI", name: "شاخص بهره‌دهی چاه", unit: "STB/d/psi" },
+                { symbol: "q", name: "دبی پایدار چاه", unit: "STB/day" },
+                { symbol: "P_bar_R", name: "فشار متوسط استاتیک مخزن", unit: "psi" },
+                { symbol: "P_wf", name: "فشار ته‌چاهی در حال جریان", unit: "psi" }
+            ],
+            notes: "معیار سنجش توان تولیدی چاه به ازای هر واحد افت فشار مخزن."
+        }
+    ];
+
+    const defaultLessons = [
+        {
+            id: 301,
+            title: "راهنمای تعویض چوک (Choke Changing Procedure)",
+            category: "عملیات چوک",
+            desc: "۱. قبل از بستن چوک فعلی، شیر چوک منیفولد دیگر را باز کنید تا مسیر جریان هرگز مسدود نشود.
+۲. فشار محفظه چوک تعویضی را با شیر تخلیه (Bleed-off) صفر کنید.
+۳. اورینگ‌های سیت چوک و لوب چوک را چک کنید؛ ذرات شن باعث ساییدگی شدید سیت می‌شوند."
+        },
+        {
+            id: 302,
+            title: "نکات نمونه‌گیری تحت فشار از سیال (Bottom-Hole Sampling)",
+            category: "نمونه‌گیری",
+            desc: "۱. نمونه‌گیری باید حتماً در شرایط تک‌فاز (فشار بالاتر از فشار حباب Bubble Point) انجام شود.
+۲. دبی چاه قبل از نمونه‌گیری حداقل ۶ ساعت باید روی چوک ثابت بماند.
+۳. بلافاصله بعد از بالا کشیدن بطری نمونه‌گیر، فشار داخل محفظه با گیج هیدرولیک بازبینی شود."
+        }
+    ];
+
+    // متغیرهای حالت برنامه
+    let phases = JSON.parse(localStorage.getItem('wt_notes_phases_v1')) || defaultPhases;
+    let formulas = JSON.parse(localStorage.getItem('wt_notes_formulas_v1')) || defaultFormulas;
+    let lessons = JSON.parse(localStorage.getItem('wt_notes_lessons_v1')) || defaultLessons;
+    let hasPendingSync = localStorage.getItem('wt_notes_pending_sync_v1') === 'true';
+    let isSyncing = false;
+
+    // جابجایی بین تب‌ها
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById('btn-tab-' + tabId).classList.add('active');
+
+        if (tabId === 'formulas') {
+            setTimeout(renderKatexMath, 50);
+        }
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function updateSyncBadge(status, text) {
+        const el = document.getElementById('sync-status');
+        if (!el) return;
+        el.className = 'sync-badge ' + status;
+        el.innerHTML = `<span class="status-dot"></span> <span>${text}</span>`;
+    }
+
+    // ذخیره در حافظه و ارسال به سرور Pantry
+    function saveState() {
+        localStorage.setItem('wt_notes_phases_v1', JSON.stringify(phases));
+        localStorage.setItem('wt_notes_formulas_v1', JSON.stringify(formulas));
+        localStorage.setItem('wt_notes_lessons_v1', JSON.stringify(lessons));
+        localStorage.setItem('wt_notes_updated_at_v1', Date.now().toString());
+        hasPendingSync = true;
+        localStorage.setItem('wt_notes_pending_sync_v1', 'true');
+        pushToCloud();
+    }
+
+    async function pushToCloud() {
+        if (isSyncing) return;
+        isSyncing = true;
+        updateSyncBadge('syncing', '🔄 ارسال به سرور ابری...');
+
+        try {
+            const payload = {
+                phases: phases,
+                formulas: formulas,
+                lessons: lessons,
+                updatedAt: Date.now()
+            };
+
+            const response = await fetch(CLOUD_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                hasPendingSync = false;
+                localStorage.setItem('wt_notes_pending_sync_v1', 'false');
+                updateSyncBadge('online', '☁️ همگام آنلاین با همکاران');
+            } else {
+                throw new Error('Server status: ' + response.status);
+            }
+        } catch (err) {
+            console.warn('Sync push error:', err);
+            hasPendingSync = true;
+            localStorage.setItem('wt_notes_pending_sync_v1', 'true');
+            if (!navigator.onLine) {
+                updateSyncBadge('offline', '⚠️ آفلاین (اطلاعات در دستگاه امن است)');
+            } else {
+                updateSyncBadge('syncing', '⏳ در صف ارسال به سرور...');
+            }
+        } finally {
+            isSyncing = false;
+        }
+    }
+
+    async function pullFromCloud(silent = true) {
+        if (isSyncing) return;
+        if (hasPendingSync) {
+            await pushToCloud();
+            return;
+        }
+
+        isSyncing = true;
+        if (!silent) updateSyncBadge('syncing', '🔄 دریافت آخرین نکات همکاران...');
+
+        try {
+            const response = await fetch(CLOUD_URL, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data && (Array.isArray(data.phases) || Array.isArray(data.formulas))) {
+                    const cloudUpdatedAt = data.updatedAt || 0;
+                    const localUpdatedAt = parseInt(localStorage.getItem('wt_notes_updated_at_v1') || '0', 10);
+
+                    if (cloudUpdatedAt >= localUpdatedAt || !localStorage.getItem('wt_notes_phases_v1')) {
+                        if (Array.isArray(data.phases)) phases = data.phases;
+                        if (Array.isArray(data.formulas)) formulas = data.formulas;
+                        if (Array.isArray(data.lessons)) lessons = data.lessons;
+
+                        localStorage.setItem('wt_notes_phases_v1', JSON.stringify(phases));
+                        localStorage.setItem('wt_notes_formulas_v1', JSON.stringify(formulas));
+                        localStorage.setItem('wt_notes_lessons_v1', JSON.stringify(lessons));
+                        localStorage.setItem('wt_notes_updated_at_v1', cloudUpdatedAt.toString());
+
+                        renderPhases();
+                        renderFormulas();
+                        renderLessons();
+                    }
+                }
+                updateSyncBadge('online', '☁️ همگام آنلاین با همکاران');
+            } else if (response.status === 400 || response.status === 404) {
+                isSyncing = false;
+                await pushToCloud();
+                return;
+            } else {
+                throw new Error('Server status: ' + response.status);
+            }
+        } catch (err) {
+            console.warn('Sync pull error:', err);
+            if (!navigator.onLine) {
+                updateSyncBadge('offline', '⚠️ آفلاین (اطلاعات در دستگاه محفوظ است)');
+            } else {
+                updateSyncBadge('offline', '⚠️ عدم اتصال ابری');
+            }
+        } finally {
+            isSyncing = false;
+        }
+    }
+
+    function manualSync() {
+        showToast('در حال بررسی و همگام‌سازی... 🔄');
+        if (hasPendingSync) pushToCloud();
+        else pullFromCloud(false);
+    }
+
+    // ================= رندر فازها و مراحل =================
+    function renderPhases() {
+        const container = document.getElementById('phases-list');
+        const query = (document.getElementById('ops-search')?.value || '').toLowerCase().trim();
+        container.innerHTML = '';
+
+        if (!phases || phases.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div style="font-size: 2rem; margin-bottom: 8px;">🛢️</div>
+                    <strong>هنوز فاز عملیاتی ثبت نشده است.</strong><br>
+                    از دکمه «افزودن فاز عملیاتی جدید» برای تعریف اولین مرحله استفاده کنید.
+                </div>`;
+            return;
+        }
+
+        phases.forEach((phase, phaseIndex) => {
+            let steps = phase.steps || [];
+            
+            // فیلتر جستجو
+            if (query) {
+                steps = steps.filter(s => 
+                    s.title.toLowerCase().includes(query) ||
+                    s.report.toLowerCase().includes(query) ||
+                    s.tips.toLowerCase().includes(query)
+                );
+                if (steps.length === 0 && !phase.name.toLowerCase().includes(query)) {
+                    return; // این فاز با جستجو همخوانی ندارد
+                }
+            }
+
+            const phaseCard = document.createElement('div');
+            phaseCard.className = 'phase-block';
+            
+            let stepsHtml = '';
+            if (steps.length === 0) {
+                stepsHtml = '<div style="padding: 14px; text-align: center; color: #94a3b8; font-size: 0.82rem;">هنوز مرحله‌ای در این فاز ثبت نشده است.</div>';
+            } else {
+                steps.forEach((step, stepIndex) => {
+                    const isChecked = step.completed ? 'checked' : '';
+                    const completedClass = step.completed ? 'completed' : '';
+
+                    stepsHtml += `
+                        <div class="step-row ${completedClass}">
+                            <div class="step-top-bar">
+                                <div class="step-title-area">
+                                    <input type="checkbox" class="step-check" ${isChecked} onchange="toggleStepCheck(${phase.id}, ${step.id})" title="تیک انجام مرحله سر چاه">
+                                    <span class="step-seq-num">گام ${stepIndex + 1}</span>
+                                    <span class="step-name">${step.title}</span>
+                                </div>
+                                <div class="step-actions">
+                                    <button class="btn-mini" onclick="openEditStepModal(${phase.id}, ${step.id})" title="ویرایش گام">✏️ ویرایش</button>
+                                    <button class="btn-mini" onclick="moveStep(${phase.id}, ${stepIndex}, -1)" title="جابجایی به بالا">⬆</button>
+                                    <button class="btn-mini" onclick="moveStep(${phase.id}, ${stepIndex}, 1)" title="جابجایی به پایین">⬇</button>
+                                    <button class="btn-mini danger" onclick="deleteStep(${phase.id}, ${step.id})" title="حذف">🗑️</button>
+                                </div>
+                            </div>
+                            
+                            <div class="step-columns">
+                                <div class="col-box col-report">
+                                    <div class="col-tag"><span>📄</span> <span>متن گزارش و شکست کار رسمی:</span></div>
+                                    <div class="col-content">${step.report}</div>
+                                </div>
+                                <div class="col-box col-tips">
+                                    <div class="col-tag"><span>💡</span> <span>نکات اجرایی، ترفندها و خطرات سر چاه:</span></div>
+                                    <div class="col-content">${step.tips}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- خط درج گام بینابینی -->
+                        <div class="insert-divider">
+                            <button class="btn-insert-between" onclick="openAddStepModal(${phase.id}, ${stepIndex + 1})">
+                                <span>➕</span> <span>درج گام جدید در این نقطه</span>
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+
+            phaseCard.innerHTML = `
+                <div class="phase-header">
+                    <div class="phase-title-wrap">
+                        <span class="phase-number">${phaseIndex + 1}</span>
+                        <div>
+                            <span class="phase-title">${phase.name}</span>
+                            <span class="phase-steps-count">${(phase.steps || []).length} گام</span>
+                        </div>
+                    </div>
+                    <div class="phase-controls">
+                        <button class="btn-mini" onclick="openAddStepModal(${phase.id}, ${steps.length})"><span>➕</span> <span>افزودن گام به انتها</span></button>
+                        <button class="btn-mini" onclick="openEditPhaseModal(${phase.id})">✏️</button>
+                        <button class="btn-mini" onclick="movePhase(${phaseIndex}, -1)">⬆</button>
+                        <button class="btn-mini" onclick="movePhase(${phaseIndex}, 1)">⬇</button>
+                        <button class="btn-mini danger" onclick="deletePhase(${phase.id})">🗑️</button>
+                    </div>
+                </div>
+                <div class="steps-container">
+                    ${stepsHtml}
+                </div>
+            `;
+            container.appendChild(phaseCard);
+        });
+    }
+
+    // عملیات فازها
+    function openAddPhaseModal() {
+        document.getElementById('phase-modal-title').innerText = 'افزودن فاز عملیاتی جدید';
+        document.getElementById('phase-id').value = '';
+        document.getElementById('phase-name').value = '';
+        document.getElementById('phase-desc').value = '';
+        document.getElementById('phase-modal').classList.add('active');
+    }
+
+    function openEditPhaseModal(id) {
+        const ph = phases.find(p => p.id === id);
+        if (!ph) return;
+        document.getElementById('phase-modal-title').innerText = 'ویرایش فاز عملیاتی';
+        document.getElementById('phase-id').value = ph.id;
+        document.getElementById('phase-name').value = ph.name;
+        document.getElementById('phase-desc').value = ph.desc || '';
+        document.getElementById('phase-modal').classList.add('active');
+    }
+
+    function closePhaseModal() {
+        document.getElementById('phase-modal').classList.remove('active');
+    }
+
+    document.getElementById('phase-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = document.getElementById('phase-id').value;
+        const name = document.getElementById('phase-name').value.trim();
+        const desc = document.getElementById('phase-desc').value.trim();
+
+        if (id) {
+            const ph = phases.find(p => p.id === parseInt(id, 10));
+            if (ph) {
+                ph.name = name;
+                ph.desc = desc;
+            }
+        } else {
+            phases.push({
+                id: Date.now(),
+                name: name,
+                desc: desc,
+                steps: []
+            });
+        }
+
+        saveState();
+        renderPhases();
+        closePhaseModal();
+        showToast('فاز عملیاتی ذخیره شد ✅');
+    });
+
+    function deletePhase(id) {
+        if (confirm('آیا از حذف این فاز و تمامی گام‌های زیرمجموعه آن اطمینان دارید؟')) {
+            phases = phases.filter(p => p.id !== id);
+            saveState();
+            renderPhases();
+            showToast('فاز حذف شد 🗑️');
+        }
+    }
+
+    function movePhase(index, direction) {
+        const target = index + direction;
+        if (target < 0 || target >= phases.length) return;
+        const temp = phases[index];
+        phases[index] = phases[target];
+        phases[target] = temp;
+        saveState();
+        renderPhases();
+    }
+
+    // عملیات گام‌ها (Steps)
+    function openAddStepModal(phaseId, insertIndex = null) {
+        document.getElementById('step-modal-title').innerText = 'افزودن گام عملیاتی جدید';
+        document.getElementById('step-phase-id').value = phaseId;
+        document.getElementById('step-id').value = '';
+        document.getElementById('step-insert-index').value = insertIndex !== null ? insertIndex : '';
+        document.getElementById('step-title').value = '';
+        document.getElementById('step-report').value = '';
+        document.getElementById('step-tips').value = '';
+        document.getElementById('step-modal').classList.add('active');
+    }
+
+    function openEditStepModal(phaseId, stepId) {
+        const ph = phases.find(p => p.id === phaseId);
+        if (!ph) return;
+        const step = ph.steps.find(s => s.id === stepId);
+        if (!step) return;
+
+        document.getElementById('step-modal-title').innerText = 'ویرایش گام عملیاتی';
+        document.getElementById('step-phase-id').value = phaseId;
+        document.getElementById('step-id').value = step.id;
+        document.getElementById('step-insert-index').value = '';
+        document.getElementById('step-title').value = step.title;
+        document.getElementById('step-report').value = step.report;
+        document.getElementById('step-tips').value = step.tips;
+        document.getElementById('step-modal').classList.add('active');
+    }
+
+    function closeStepModal() {
+        document.getElementById('step-modal').classList.remove('active');
+    }
+
+    document.getElementById('step-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const phaseId = parseInt(document.getElementById('step-phase-id').value, 10);
+        const stepId = document.getElementById('step-id').value;
+        const insertIdxVal = document.getElementById('step-insert-index').value;
+        const title = document.getElementById('step-title').value.trim();
+        const report = document.getElementById('step-report').value.trim();
+        const tips = document.getElementById('step-tips').value.trim();
+
+        const ph = phases.find(p => p.id === phaseId);
+        if (!ph) return;
+        if (!ph.steps) ph.steps = [];
+
+        if (stepId) {
+            // ویرایش
+            const step = ph.steps.find(s => s.id === parseInt(stepId, 10));
+            if (step) {
+                step.title = title;
+                step.report = report;
+                step.tips = tips;
+            }
+        } else {
+            // افزودن جدید
+            const newStep = {
+                id: Date.now(),
+                title: title,
+                report: report,
+                tips: tips,
+                completed: false
+            };
+            if (insertIdxVal !== '' && !isNaN(parseInt(insertIdxVal, 10))) {
+                ph.steps.splice(parseInt(insertIdxVal, 10), 0, newStep);
+            } else {
+                ph.steps.push(newStep);
+            }
+        }
+
+        saveState();
+        renderPhases();
+        closeStepModal();
+        showToast('گام عملیاتی با موفقیت ثبت شد ✅');
+    });
+
+    function toggleStepCheck(phaseId, stepId) {
+        const ph = phases.find(p => p.id === phaseId);
+        if (!ph) return;
+        const step = ph.steps.find(s => s.id === stepId);
+        if (!step) return;
+        step.completed = !step.completed;
+        saveState();
+        renderPhases();
+    }
+
+    function moveStep(phaseId, index, direction) {
+        const ph = phases.find(p => p.id === phaseId);
+        if (!ph || !ph.steps) return;
+        const target = index + direction;
+        if (target < 0 || target >= ph.steps.length) return;
+        const temp = ph.steps[index];
+        ph.steps[index] = ph.steps[target];
+        ph.steps[target] = temp;
+        saveState();
+        renderPhases();
+    }
+
+    function deleteStep(phaseId, stepId) {
+        const ph = phases.find(p => p.id === phaseId);
+        if (!ph || !ph.steps) return;
+        if (confirm('آیا از حذف این گام عملیاتی مطمئن هستید؟')) {
+            ph.steps = ph.steps.filter(s => s.id !== stepId);
+            saveState();
+            renderPhases();
+            showToast('گام عملیاتی حذف شد 🗑️');
+        }
+    }
+
+    // ================= تب فرمول‌ها =================
+    function previewLatex() {
+        const latex = document.getElementById('form-formula-latex').value.trim();
+        const box = document.getElementById('latex-preview');
+        if (!latex) {
+            box.innerText = 'پیش‌نمایش فرمول...';
+            return;
+        }
+        try {
+            if (window.katex) {
+                katex.render(latex, box, { displayMode: true, throwOnError: false });
+            } else {
+                box.innerText = latex;
+            }
+        } catch(e) {
+            box.innerText = latex;
+        }
+    }
+
+    function renderKatexMath() {
+        if (!window.katex) return;
+        document.querySelectorAll('.math-code').forEach(el => {
+            const raw = el.getAttribute('data-latex') || el.innerText;
+            try {
+                katex.render(raw, el, { displayMode: true, throwOnError: false });
+            } catch(e) {
+                console.error(e);
+            }
+        });
+    }
+
+    function renderFormulas() {
+        const container = document.getElementById('formulas-list');
+        const query = (document.getElementById('formula-search')?.value || '').toLowerCase().trim();
+        container.innerHTML = '';
+
+        if (!formulas || formulas.length === 0) {
+            container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">هیچ فرمولی ثبت نشده است.</div>';
+            return;
+        }
+
+        const filtered = formulas.filter(f => 
+            f.title.toLowerCase().includes(query) ||
+            (f.category && f.category.toLowerCase().includes(query)) ||
+            (f.notes && f.notes.toLowerCase().includes(query))
+        );
+
+        filtered.forEach((formula, idx) => {
+            const card = document.createElement('div');
+            card.className = 'formula-card';
+
+            let paramsHtml = '';
+            if (formula.params && formula.params.length > 0) {
+                paramsHtml = `
+                    <table class="params-table">
+                        <thead>
+                            <tr>
+                                <th>نماد</th>
+                                <th>شرح پارامتر</th>
+                                <th>واحد مهندسی</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${formula.params.map(p => `
+                                <tr>
+                                    <td class="param-symbol">${p.symbol}</td>
+                                    <td>${p.name}</td>
+                                    <td class="param-unit">${p.unit}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            card.innerHTML = `
+                <div>
+                    <div class="formula-header">
+                        <span class="formula-title">${formula.title}</span>
+                        <span class="formula-category">${formula.category || 'چاه‌آزمایی'}</span>
+                    </div>
+
+                    <div class="math-display-box math-code" data-latex="${formula.latex}">
+                        ${formula.latex}
+                    </div>
+
+                    ${paramsHtml}
+                    ${formula.notes ? `<div style="font-size: 0.76rem; color: #64748b; margin-top: 8px;">ℹ️ ${formula.notes}</div>` : ''}
+                </div>
+
+                <div class="formula-footer">
+                    <span style="font-size: 0.72rem; color: #94a3b8;">فرمول #${idx + 1}</span>
+                    <div style="display: flex; gap: 4px;">
+                        <button class="btn-mini" onclick="openEditFormulaModal(${formula.id})">✏️ ویرایش</button>
+                        <button class="btn-mini danger" onclick="deleteFormula(${formula.id})">🗑️</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        setTimeout(renderKatexMath, 50);
+    }
+
+    function openAddFormulaModal() {
+        document.getElementById('formula-modal-title').innerText = 'افزودن فرمول مهندسی جدید';
+        document.getElementById('formula-id').value = '';
+        document.getElementById('form-formula-title').value = '';
+        document.getElementById('form-formula-cat').value = 'چاه‌آزمایی';
+        document.getElementById('form-formula-latex').value = '';
+        document.getElementById('form-formula-params').value = '';
+        document.getElementById('form-formula-notes').value = '';
+        document.getElementById('latex-preview').innerText = 'پیش‌نمایش فرمول در اینجا نمایش داده می‌شود...';
+        document.getElementById('formula-modal').classList.add('active');
+    }
+
+    function openEditFormulaModal(id) {
+        const f = formulas.find(item => item.id === id);
+        if (!f) return;
+
+        document.getElementById('formula-modal-title').innerText = 'ویرایش فرمول مهندسی';
+        document.getElementById('formula-id').value = f.id;
+        document.getElementById('form-formula-title').value = f.title;
+        document.getElementById('form-formula-cat').value = f.category || '';
+        document.getElementById('form-formula-latex').value = f.latex;
+        
+        let paramsText = '';
+        if (f.params && f.params.length > 0) {
+            paramsText = f.params.map(p => `${p.symbol} | ${p.name} | ${p.unit}`).join('
+');
+        }
+        document.getElementById('form-formula-params').value = paramsText;
+        document.getElementById('form-formula-notes').value = f.notes || '';
+        
+        document.getElementById('formula-modal').classList.add('active');
+        previewLatex();
+    }
+
+    function closeFormulaModal() {
+        document.getElementById('formula-modal').classList.remove('active');
+    }
+
+    document.getElementById('formula-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = document.getElementById('formula-id').value;
+        const title = document.getElementById('form-formula-title').value.trim();
+        const cat = document.getElementById('form-formula-cat').value.trim() || 'عمومی';
+        const latex = document.getElementById('form-formula-latex').value.trim();
+        const notes = document.getElementById('form-formula-notes').value.trim();
+
+        const paramsRaw = document.getElementById('form-formula-params').value.trim();
+        const params = [];
+        if (paramsRaw) {
+            paramsRaw.split('
+').forEach(line => {
+                const parts = line.split('|').map(p => p.trim());
+                if (parts.length >= 2) {
+                    params.push({
+                        symbol: parts[0],
+                        name: parts[1],
+                        unit: parts[2] || '-'
+                    });
+                }
+            });
+        }
+
+        if (id) {
+            const f = formulas.find(item => item.id === parseInt(id, 10));
+            if (f) {
+                f.title = title;
+                f.category = cat;
+                f.latex = latex;
+                f.params = params;
+                f.notes = notes;
+            }
+        } else {
+            formulas.push({
+                id: Date.now(),
+                title: title,
+                category: cat,
+                latex: latex,
+                params: params,
+                notes: notes
+            });
+        }
+
+        saveState();
+        renderFormulas();
+        closeFormulaModal();
+        showToast('فرمول با موفقیت ذخیره شد 📐');
+    });
+
+    function deleteFormula(id) {
+        if (confirm('آیا از حذف این فرمول مطمئن هستید؟')) {
+            formulas = formulas.filter(f => f.id !== id);
+            saveState();
+            renderFormulas();
+            showToast('فرمول حذف شد 🗑️');
+        }
+    }
+
+    // ================= تب نکات و درس‌آموخته‌ها =================
+    function renderLessons() {
+        const container = document.getElementById('lessons-list');
+        const query = (document.getElementById('lessons-search')?.value || '').toLowerCase().trim();
+        container.innerHTML = '';
+
+        if (!lessons || lessons.length === 0) {
+            container.innerHTML = '<div class="empty-state" style="grid-column: 1/-1;">هیچ نکته یا درسی ثبت نشده است.</div>';
+            return;
+        }
+
+        const filtered = lessons.filter(l => 
+            l.title.toLowerCase().includes(query) ||
+            l.desc.toLowerCase().includes(query) ||
+            (l.category && l.category.toLowerCase().includes(query))
+        );
+
+        filtered.forEach(lesson => {
+            const card = document.createElement('div');
+            card.className = 'formula-card';
+            card.innerHTML = `
+                <div>
+                    <div class="formula-header">
+                        <span class="formula-title">💡 ${lesson.title}</span>
+                        <span class="formula-category">${lesson.category || 'عمومی'}</span>
+                    </div>
+                    <div style="font-size: 0.84rem; color: #334155; line-height: 1.7; white-space: pre-line; background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                        ${lesson.desc}
+                    </div>
+                </div>
+                <div class="formula-footer">
+                    <span style="font-size: 0.72rem; color: #94a3b8;">ثبت‌شده</span>
+                    <div style="display: flex; gap: 4px;">
+                        <button class="btn-mini" onclick="openEditLessonModal(${lesson.id})">✏️ ویرایش</button>
+                        <button class="btn-mini danger" onclick="deleteLesson(${lesson.id})">🗑️</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function openAddLessonModal() {
+        document.getElementById('lesson-modal-title').innerText = 'افزودن نکته فنی / ایمنی جدید';
+        document.getElementById('lesson-id').value = '';
+        document.getElementById('lesson-title').value = '';
+        document.getElementById('lesson-cat').value = 'ایمنی و عملیات';
+        document.getElementById('lesson-desc').value = '';
+        document.getElementById('lesson-modal').classList.add('active');
+    }
+
+    function openEditLessonModal(id) {
+        const l = lessons.find(item => item.id === id);
+        if (!l) return;
+        document.getElementById('lesson-modal-title').innerText = 'ویرایش نکته فنی';
+        document.getElementById('lesson-id').value = l.id;
+        document.getElementById('lesson-title').value = l.title;
+        document.getElementById('lesson-cat').value = l.category || '';
+        document.getElementById('lesson-desc').value = l.desc;
+        document.getElementById('lesson-modal').classList.add('active');
+    }
+
+    function closeLessonModal() {
+        document.getElementById('lesson-modal').classList.remove('active');
+    }
+
+    document.getElementById('lesson-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = document.getElementById('lesson-id').value;
+        const title = document.getElementById('lesson-title').value.trim();
+        const cat = document.getElementById('lesson-cat').value.trim() || 'عمومی';
+        const desc = document.getElementById('lesson-desc').value.trim();
+
+        if (id) {
+            const l = lessons.find(item => item.id === parseInt(id, 10));
+            if (l) {
+                l.title = title;
+                l.category = cat;
+                l.desc = desc;
+            }
+        } else {
+            lessons.push({
+                id: Date.now(),
+                title: title,
+                category: cat,
+                desc: desc
+            });
+        }
+
+        saveState();
+        renderLessons();
+        closeLessonModal();
+        showToast('نکته فنی ذخیره شد 💡');
+    });
+
+    function deleteLesson(id) {
+        if (confirm('آیا از حذف این نکته اطمینان دارید؟')) {
+            lessons = lessons.filter(l => l.id !== id);
+            saveState();
+            renderLessons();
+            showToast('نکته حذف شد 🗑️');
+        }
+    }
+
+    // پشتیبان‌گیری
+    function exportData() {
+        const data = {
+            phases: phases,
+            formulas: formulas,
+            lessons: lessons,
+            exportDate: new Date().toLocaleDateString('fa-IR')
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `backup-welltest-notes-${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('فایل پشتیبان دانلود شد 💾');
+    }
+
+    function importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (imported.phases || imported.formulas) {
+                    phases = imported.phases || [];
+                    formulas = imported.formulas || [];
+                    lessons = imported.lessons || [];
+                    saveState();
+                    renderPhases();
+                    renderFormulas();
+                    renderLessons();
+                    showToast('اطلاعات با موفقیت بازیابی شد ✅');
+                } else {
+                    alert('فرمت فایل نامعتبر است.');
+                }
+            } catch (err) {
+                alert('خطا در خواندن فایل.');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function resetToSampleData() {
+        if (confirm('آیا مایلید تمام اطلاعات به نمونه‌های اولیه چاه‌آزمایی بازنشانی شود؟')) {
+            phases = JSON.parse(JSON.stringify(defaultPhases));
+            formulas = JSON.parse(JSON.stringify(defaultFormulas));
+            lessons = JSON.parse(JSON.stringify(defaultLessons));
+            saveState();
+            renderPhases();
+            renderFormulas();
+            renderLessons();
+            showToast('اطلاعات اولیه بارگذاری شد ✅');
+        }
+    }
+
+    // رویدادهای عمومی
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal-overlay')) {
+            closePhaseModal();
+            closeStepModal();
+            closeFormulaModal();
+            closeLessonModal();
+        }
+    });
+
+    window.addEventListener('online', () => {
+        showToast('اینترنت وصل شد؛ همگام‌سازی ابری... 🔄');
+        if (hasPendingSync) pushToCloud();
+        else pullFromCloud(false);
+    });
+
+    window.addEventListener('offline', () => {
+        updateSyncBadge('offline', '⚠️ آفلاین (اطلاعات در دستگاه محفوظ است)');
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            if (hasPendingSync) pushToCloud();
+            else pullFromCloud(true);
+        }
+    });
+
+    setInterval(() => {
+        if (navigator.onLine) {
+            if (hasPendingSync) pushToCloud();
+            else pullFromCloud(true);
+        }
+    }, 20000);
+
+    // بارگذاری اولیه
+    renderPhases();
+    renderFormulas();
+    renderLessons();
+    pullFromCloud(false);
+</script>
+
+</body>
+</html>
