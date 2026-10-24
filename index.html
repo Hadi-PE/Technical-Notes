@@ -8,23 +8,23 @@
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
         :root {
-            --bg: #0b1120;
-            --surface: #1e293b;
-            --surface-hover: #334155;
-            --surface-card: #151f32;
-            --border: #334155;
-            --border-light: #475569;
+            --bg: #090e17;
+            --surface: #111a2e;
+            --surface-hover: #1b2842;
+            --surface-card: #0d1527;
+            --border: #23354d;
+            --border-light: #334b6b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --primary: #0284c7;
             --primary-hover: #0369a1;
-            --primary-light: #0c4a6e;
+            --primary-light: rgba(2, 132, 199, 0.15);
             --accent: #f59e0b;
-            --accent-light: #451a03;
+            --accent-light: rgba(245, 158, 11, 0.12);
             --success: #10b981;
-            --success-light: #064e3b;
+            --success-light: rgba(16, 185, 129, 0.12);
             --danger: #ef4444;
-            --danger-light: #450a0a;
+            --danger-light: rgba(239, 68, 68, 0.12);
             --font-mono: 'Consolas', 'Courier New', monospace;
         }
 
@@ -46,27 +46,29 @@
         }
 
         .container {
-            max-width: 820px;
+            max-width: 860px;
             margin: 0 auto;
         }
 
-        /* هدر اصلی تمیز و مینیمال طبق دستور */
+        /* هدر اختصاصی و بدون اضافات طبق درخواست */
         .header-title {
             text-align: center;
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.18rem;
+            font-weight: 900;
             color: #38bdf8;
-            padding: 12px 6px 14px;
-            letter-spacing: -0.3px;
+            padding: 14px 10px;
+            background: linear-gradient(180deg, #131f36 0%, #0c1424 100%);
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
-            margin-bottom: 12px;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
         }
 
-        /* نوار وضعیت ابری فشرده */
+        /* نوار اتصال ابری بدون فیلتر */
         .sync-bar {
             display: flex;
             justify-content: center;
@@ -77,76 +79,90 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
+            font-size: 0.76rem;
+            font-weight: bold;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.25s;
+            user-select: none;
         }
 
         .sync-badge.online {
             background: rgba(16, 185, 129, 0.15);
             color: #34d399;
-            border-color: rgba(16, 185, 129, 0.35);
+            border-color: rgba(16, 185, 129, 0.4);
         }
 
         .sync-badge.syncing {
             background: rgba(2, 132, 199, 0.15);
             color: #38bdf8;
-            border-color: rgba(2, 132, 199, 0.35);
+            border-color: rgba(2, 132, 199, 0.4);
         }
 
         .sync-badge.offline {
             background: rgba(239, 68, 68, 0.15);
             color: #f87171;
-            border-color: rgba(239, 68, 68, 0.35);
+            border-color: rgba(239, 68, 68, 0.4);
         }
 
         .status-dot {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: currentColor;
+            background: #94a3b8;
             display: inline-block;
         }
 
-        /* نوار تب‌های سه‌گانه */
+        .sync-badge.online .status-dot {
+            background: #10b981;
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
+        }
+
+        .sync-badge.syncing .status-dot {
+            background: #0284c7;
+        }
+
+        .sync-badge.offline .status-dot {
+            background: #ef4444;
+        }
+
+        /* تب‌های اصلی برنامه */
         .tabs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            background: #111c30;
+            display: flex;
+            background: #111a2c;
             padding: 4px;
             border-radius: 12px;
+            border: 1px solid var(--border);
             margin-bottom: 14px;
             gap: 4px;
-            border: 1px solid var(--border);
         }
 
         .tab-btn {
+            flex: 1;
             padding: 10px 4px;
             border: none;
             background: none;
-            font-size: 0.84rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 800;
             color: var(--text-muted);
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            border-radius: 9px;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            text-align: center;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
+            background: var(--primary);
             color: #ffffff;
-            background-color: var(--primary);
-            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
         }
 
         .tab-content {
@@ -157,505 +173,715 @@
             display: block;
         }
 
-        /* نوار انتخاب و مدیریت فاز عملیاتی */
-        .phase-control-panel {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
+        /* نوار ابزار جستجو و دکمه جدید */
+        .toolbar {
+            display: flex;
+            gap: 8px;
             margin-bottom: 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        }
-
-        .phase-select-header {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
         }
 
-        .phase-label {
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .phase-select-box {
+        .search-box {
+            flex: 1;
             position: relative;
-            margin-bottom: 10px;
         }
 
-        .phase-select {
+        .search-box input {
             width: 100%;
-            padding: 12px 14px;
-            background: #0f172a;
-            border: 1.5px solid #38bdf8;
+            padding: 10px 38px 10px 12px;
+            background: #0d1527;
+            border: 1.5px solid var(--border);
             border-radius: 10px;
-            color: #f8fafc;
-            font-size: 0.92rem;
-            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.86rem;
             outline: none;
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        .phase-select-icon {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: #38bdf8;
-            font-size: 0.85rem;
-        }
-
-        .phase-actions-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .btn-mini-action {
-            background: #0f172a;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
             transition: all 0.2s;
         }
 
-        .btn-mini-action:hover {
-            color: var(--text-main);
-            border-color: var(--border-light);
-            background: #1e293b;
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
         }
 
-        .btn-mini-action.primary {
-            background: rgba(2, 132, 199, 0.2);
-            color: #38bdf8;
-            border-color: rgba(56, 189, 248, 0.4);
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 0.95rem;
         }
 
-        .btn-mini-action.danger {
-            color: #f87171;
-            border-color: rgba(239, 68, 68, 0.3);
-            background: rgba(239, 68, 68, 0.1);
+        .btn-action-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
         }
 
-        /* جعبه تمپلیت گزارش یکپارچه ارسالی به اداره */
-        .master-report-card {
-            background: linear-gradient(145deg, #131d2e 0%, #0d1522 100%);
-            border: 1.5px solid rgba(56, 189, 248, 0.3);
+        .btn-action-primary:active {
+            transform: scale(0.97);
+        }
+
+        /* ================= کارت‌های سطح ۱: فازهای اصلی ================= */
+        .phase-section-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .phase-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .phase-card {
+            background: linear-gradient(145deg, #111c30 0%, #0d1627 100%);
+            border: 1.5px solid #23354d;
+            border-right: 5px solid #0284c7;
             border-radius: 14px;
             padding: 14px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.25s ease;
+            cursor: pointer;
         }
 
-        .master-report-header {
+        .phase-card:hover {
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.2);
+        }
+
+        .phase-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 8px;
+        }
+
+        .phase-badge-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .phase-badge {
+            background: #0284c7;
+            color: #ffffff;
+            font-size: 0.74rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .phase-name {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #f1f5f9;
+        }
+
+        .phase-desc {
+            font-size: 0.82rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .phase-metrics-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #090f1a;
+            border-radius: 9px;
+            padding: 8px 12px;
+            border: 1px solid #1a273b;
+            margin-bottom: 12px;
+            font-size: 0.78rem;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .phase-metric-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #cbd5e1;
+            font-weight: 700;
+        }
+
+        .phase-metric-highlight {
+            color: #38bdf8;
+            font-weight: 800;
+        }
+
+        .phase-metric-time {
+            color: #34d399;
+            font-weight: 800;
+        }
+
+        .phase-card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 8px;
+            border-top: 1px solid #1a273b;
+            padding-top: 10px;
+            gap: 8px;
         }
 
-        .master-report-title {
-            font-size: 0.88rem;
-            font-weight: 800;
+        .btn-enter-phase {
+            background: rgba(2, 132, 199, 0.2);
             color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-copy-all {
-            background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
-            color: #ffffff;
-            border: none;
+            border: 1px solid rgba(2, 132, 199, 0.4);
             padding: 7px 14px;
             border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 800;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+            cursor: pointer;
             transition: all 0.2s;
         }
 
-        .btn-copy-all:active {
-            transform: scale(0.96);
+        .btn-enter-phase:hover {
+            background: #0284c7;
+            color: #ffffff;
         }
 
-        .master-report-content {
-            background: #090e17;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 0.85rem;
-            line-height: 1.7;
-            color: #e2e8f0;
-            white-space: pre-wrap;
-            word-break: break-word;
-            direction: rtl;
-            max-height: 240px;
-            overflow-y: auto;
+        .phase-manage-btns {
+            display: flex;
+            gap: 4px;
         }
 
-        /* سطر به سطر شکست کار و عملیات */
-        .section-header-row {
+        .btn-mini-tool {
+            background: #172338;
+            border: 1px solid #23354d;
+            color: #94a3b8;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-mini-tool:hover {
+            background: #23354d;
+            color: #ffffff;
+        }
+
+        .btn-mini-tool.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        /* ================= نوار ناوبری سطح ۲: داخل فاز ================= */
+        .phase-nav-banner {
+            background: linear-gradient(135deg, #132238 0%, #0d1727 100%);
+            border: 1.5px solid #2a4163;
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 16px 2px 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
         }
 
-        .section-title {
-            font-size: 0.92rem;
-            font-weight: 800;
+        .btn-back-to-phases {
+            background: #1e2e47;
             color: #f1f5f9;
-            display: flex;
+            border: 1px solid #334b6b;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .step-cards-container {
+        .btn-back-to-phases:hover {
+            background: #0284c7;
+            color: white;
+            border-color: #0284c7;
+        }
+
+        .active-phase-info {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .active-phase-title-text {
+            font-size: 0.96rem;
+            font-weight: 900;
+            color: #38bdf8;
+            margin-bottom: 3px;
+        }
+
+        .active-phase-hours-badge {
+            font-size: 0.76rem;
+            color: #34d399;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        /* ================= کارت‌های سطح ۲: شکست کارها ================= */
+        .step-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
         }
 
         .step-card {
-            background: var(--surface-card);
-            border: 1px solid var(--border);
+            background: #0d1526;
+            border: 1.5px solid #203147;
             border-radius: 12px;
-            overflow: hidden;
+            padding: 12px;
+            position: relative;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            transition: border-color 0.2s ease;
-        }
-
-        .step-card:hover {
-            border-color: var(--border-light);
+            transition: border-color 0.2s;
         }
 
         .step-card.completed {
-            border-left: 4px solid var(--success);
-            opacity: 0.92;
+            border-color: #065f46;
+            background: #0a131e;
         }
 
-        /* بخش بالایی کارت: گزارش رسمی */
-        .step-top {
-            padding: 12px 14px 10px;
-            background: #172338;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .step-meta-row {
+        .step-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .step-title-area {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-weight: 800;
-            font-size: 0.92rem;
-            color: #f8fafc;
+            flex: 1;
         }
 
-        .step-num-badge {
-            background: rgba(56, 189, 248, 0.2);
+        .step-index-badge {
+            background: #1e293b;
             color: #38bdf8;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 800;
-        }
-
-        .step-time-badge {
-            background: #0f172a;
-            border: 1px solid var(--border);
-            color: #cbd5e1;
-            padding: 2px 8px;
-            border-radius: 6px;
             font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 6px;
+            border: 1px solid #334155;
             white-space: nowrap;
         }
 
-        .step-report-body {
-            font-size: 0.86rem;
-            color: #cbd5e1;
-            line-height: 1.6;
-            margin-bottom: 8px;
-            background: #0f172a;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border-right: 3px solid var(--primary);
+        .step-title {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #f8fafc;
         }
 
-        .step-report-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.78rem;
-        }
-
-        .btn-copy-line {
-            background: #1e293b;
-            border: 1px solid var(--border);
-            color: #38bdf8;
-            padding: 4px 8px;
+        .step-duration-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 3px 8px;
             border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.74rem;
+            font-weight: 800;
             display: inline-flex;
             align-items: center;
             gap: 4px;
+            white-space: nowrap;
         }
 
-        /* بخش پایین کارت: کشویی نکات عملیاتی سر چاه */
-        .step-drawer-toggle {
+        /* کادر متن گزارش رسمی (کلیک مستقیم برای کپی) */
+        .step-report-box {
+            background: #070d18;
+            border: 1px solid #1a293f;
+            border-right: 3.5px solid #0284c7;
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .step-report-box:hover {
+            border-color: #38bdf8;
+            background: #091222;
+        }
+
+        .step-report-box.copy-active {
+            background: #0c213d;
+            border-color: #38bdf8;
+            transform: scale(0.99);
+        }
+
+        .report-box-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: #0284c7;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .click-copy-hint {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: normal;
+        }
+
+        .step-report-text {
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+            white-space: pre-line;
+            user-select: all;
+        }
+
+        /* نوار دکمه فلش‌دار کشویی برای نکات عملیاتی */
+        .tips-toggle-btn {
+            background: #141b2b;
+            color: #f59e0b;
+            border: 1px solid #2a2c3a;
             width: 100%;
-            padding: 9px 14px;
-            background: #131c2d;
-            border: none;
-            color: #fbbf24;
-            font-size: 0.82rem;
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
             font-weight: 800;
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            transition: background 0.2s;
+            justify-content: space-between;
+            transition: all 0.2s;
+            margin-bottom: 8px;
         }
 
-        .step-drawer-toggle:hover {
-            background: #172338;
+        .tips-toggle-btn:hover {
+            background: #1c2235;
+            border-color: #f59e0b;
         }
 
-        .step-drawer-content {
+        .tips-toggle-btn.open {
+            background: rgba(245, 158, 11, 0.12);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .tips-toggle-arrow {
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        /* کادر نکات عملیاتی سر چاه (کلیک برای کپی جداگانه) */
+        .step-tips-box {
+            background: #120e06;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-right: 3.5px solid #f59e0b;
+            border-radius: 9px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: none;
-            padding: 12px 14px;
-            background: #0f172a;
-            border-top: 1px dashed rgba(245, 158, 11, 0.25);
-            font-size: 0.84rem;
-            line-height: 1.65;
-            color: #fef08a;
-            white-space: pre-line;
         }
 
-        .step-drawer-content.open {
-            display: block;
+        .step-tips-box:hover {
+            border-color: #f59e0b;
+            background: #181308;
         }
 
-        /* سطر ابزارهای هر کارت */
-        .step-bottom-bar {
+        .step-tips-box.copy-active-tips {
+            background: #241c09;
+            border-color: #f59e0b;
+            transform: scale(0.99);
+        }
+
+        .tips-box-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 14px;
-            background: #111a2a;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.72rem;
+            color: #f59e0b;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .step-tips-text {
+            font-size: 0.83rem;
+            color: #fde68a;
+            line-height: 1.6;
+            white-space: pre-line;
+            user-select: all;
+        }
+
+        /* سطر ابزارهای پایین کارت شکست کار */
+        .step-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #1a293f;
+            padding-top: 8px;
+            font-size: 0.76rem;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .step-check-label {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.78rem;
-            color: var(--text-muted);
+            color: #94a3b8;
             cursor: pointer;
             user-select: none;
         }
 
         .step-check-label input {
             cursor: pointer;
-            accent-color: var(--success);
+            accent-color: #10b981;
             width: 15px;
             height: 15px;
         }
 
-        .step-card-btns {
+        .step-card.completed .step-check-label {
+            color: #34d399;
+            font-weight: bold;
+        }
+
+        .step-action-btns {
             display: flex;
-            gap: 5px;
-        }
-
-        .btn-card-icon {
-            background: #1e293b;
-            border: 1px solid var(--border);
-            color: #cbd5e1;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            cursor: pointer;
-        }
-
-        .btn-card-icon:hover {
-            background: #334155;
-            color: #ffffff;
-        }
-
-        .btn-card-icon.delete {
-            color: #f87171;
-            background: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-
-        /* خط درج سطر بینابینی */
-        .insert-between-row {
-            display: flex;
-            justify-content: center;
-            margin: -4px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn-insert-between {
-            background: #1e293b;
-            border: 1px dashed var(--border-light);
-            color: #94a3b8;
-            padding: 3px 12px;
-            border-radius: 14px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
             gap: 4px;
+        }
+
+        /* دکمه بینابینی درج سطر در نقطه دلخواه */
+        .insert-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 4px 0;
+        }
+
+        .insert-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: #1a293f;
+            border-top: 1px dashed #23354d;
+        }
+
+        .btn-insert-interstitial {
+            position: relative;
+            z-index: 1;
+            background: #090e17;
+            border: 1px solid #23354d;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            cursor: pointer;
             transition: all 0.2s;
         }
 
-        .btn-insert-between:hover {
-            background: var(--primary);
-            color: #ffffff;
-            border-color: var(--primary);
-            transform: scale(1.03);
+        .btn-insert-interstitial:hover {
+            border-color: #0284c7;
+            color: #38bdf8;
+            background: #0f1a2e;
         }
 
-        /* فرمول‌های ریاضی تمیز و بومی */
+        /* ================= تب دوم: فرمول‌های کاربردی با کسر و واحد ================= */
+        .formula-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
         .formula-card {
-            background: var(--surface-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: #0d1527;
+            border: 1.5px solid #23354d;
+            border-radius: 14px;
             padding: 14px;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
-        .formula-header {
+        .formula-card-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 8px;
         }
 
         .formula-title {
-            font-size: 0.94rem;
+            font-size: 0.96rem;
             font-weight: 800;
-            color: #38bdf8;
+            color: #f1f5f9;
         }
 
-        .formula-box {
-            background: #090e17;
-            border: 1.5px solid rgba(56, 189, 248, 0.3);
+        /* کادر فرمول ریاضی */
+        .math-box-container {
+            background: #060b14;
+            border: 1.5px solid rgba(2, 132, 199, 0.35);
             border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 12px;
-            direction: ltr;
-            text-align: center;
-            font-family: var(--font-mono);
-            font-size: 1.1rem;
-            color: #f8fafc;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            overflow-x: auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-x: auto;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* المان‌های کسر و نمادهای ریاضی بدون نیاز به اینترنت */
-        .frac {
+        .math-formula-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.12rem;
+            font-weight: 700;
+            direction: ltr;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            color: #38bdf8;
+        }
+
+        .math-var {
+            color: #38bdf8;
+            font-weight: 800;
+        }
+
+        .math-op {
+            color: #94a3b8;
+            margin: 0 4px;
+        }
+
+        .math-num {
+            color: #f59e0b;
+            font-weight: 800;
+        }
+
+        .math-frac {
             display: inline-flex;
             flex-direction: column;
             vertical-align: middle;
             text-align: center;
             padding: 0 4px;
-            font-size: 0.95em;
         }
 
-        .frac .top {
-            border-bottom: 1.5px solid #f8fafc;
-            padding-bottom: 2px;
+        .math-top {
+            border-bottom: 2px solid #38bdf8;
+            padding: 2px 8px;
+            color: #f1f5f9;
         }
 
-        .frac .bot {
-            padding-top: 2px;
+        .math-bot {
+            padding: 3px 8px 1px;
+            color: #cbd5e1;
         }
 
-        .param-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.78rem;
-            background: #0f172a;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 8px;
+        /* کادر معادله واحدها متناظر */
+        .unit-box-container {
+            background: #06110f;
+            border: 1.5px solid rgba(16, 185, 129, 0.35);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
-        .param-table th, .param-table td {
-            padding: 6px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            text-align: right;
-        }
-
-        .param-table th {
-            background: #1e293b;
-            color: #94a3b8;
+        .unit-formula-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.98rem;
             font-weight: 700;
-        }
-
-        .param-sym {
-            font-family: var(--font-mono);
-            color: #f59e0b;
-            font-weight: bold;
             direction: ltr;
-            text-align: center;
-        }
-
-        .param-unit {
             font-family: var(--font-mono);
-            color: #38bdf8;
-            direction: ltr;
-            text-align: center;
+            white-space: nowrap;
+            color: #34d399;
         }
 
-        /* کارت‌های نکات عمومی سر چاه */
+        .unit-var {
+            color: #34d399;
+            font-weight: 800;
+        }
+
+        .unit-top {
+            border-bottom: 2px solid #34d399;
+            padding: 2px 8px;
+            color: #a7f3d0;
+        }
+
+        .unit-bot {
+            padding: 3px 8px 1px;
+            color: #6ee7b7;
+        }
+
+        .formula-desc-box {
+            background: #090e18;
+            border: 1px solid #1a273b;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        /* ================= تب سوم: نکات عمومی ================= */
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .tip-card {
-            background: var(--surface-card);
-            border: 1px solid var(--border);
+            background: #0d1527;
+            border: 1.5px solid #23354d;
+            border-right: 4px solid #f59e0b;
             border-radius: 12px;
             padding: 14px;
-            margin-bottom: 12px;
         }
 
         .tip-card-header {
@@ -668,58 +894,33 @@
         .tip-card-title {
             font-size: 0.92rem;
             font-weight: 800;
-            color: #fbbf24;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            color: #f59e0b;
         }
 
-        .tip-card-body {
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            line-height: 1.65;
+        .tip-card-text {
+            font-size: 0.84rem;
+            color: #e2e8f0;
+            line-height: 1.6;
             white-space: pre-line;
         }
 
-        /* دکمه‌های اصلی و ورودی‌ها */
-        .btn-full {
-            width: 100%;
-            padding: 11px;
-            background: var(--primary);
-            color: #ffffff;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: background 0.2s;
-        }
-
-        .btn-full:active {
-            transform: scale(0.98);
-        }
-
-        /* مودال‌ها (Popups) */
+        /* ================= مودال‌ها (پنجره‌های ویرایش و افزودن) ================= */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(4, 8, 16, 0.75);
             backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 14px;
-            z-index: 1000;
+            z-index: 2000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
 
         .modal-overlay.active {
@@ -728,17 +929,17 @@
         }
 
         .modal-content {
-            background: var(--surface);
-            border: 1px solid var(--border-light);
+            background: #0d1627;
+            border: 1.5px solid var(--border-light);
             border-radius: 16px;
             width: 100%;
-            max-width: 540px;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
             padding: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             transform: scale(0.95);
-            transition: transform 0.25s ease;
+            transition: transform 0.2s ease;
         }
 
         .modal-overlay.active .modal-content {
@@ -755,7 +956,7 @@
         }
 
         .modal-title {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: #38bdf8;
         }
@@ -765,7 +966,8 @@
             border: none;
             font-size: 1.4rem;
             cursor: pointer;
-            color: var(--text-muted);
+            color: #64748b;
+            line-height: 1;
         }
 
         .form-group {
@@ -775,44 +977,70 @@
             margin-bottom: 12px;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
         label {
             font-size: 0.8rem;
             font-weight: 700;
             color: #cbd5e1;
         }
 
-        input, textarea, select {
+        input, textarea {
             padding: 10px 12px;
-            background: #0f172a;
+            background: #070d18;
             border: 1.5px solid var(--border);
-            border-radius: 8px;
+            border-radius: 9px;
             font-size: 0.88rem;
-            color: #f8fafc;
+            color: var(--text-main);
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
 
-        input:focus, textarea:focus, select:focus {
-            border-color: #38bdf8;
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
         }
 
-        /* Toast پیام */
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+            margin-top: 6px;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* پیام Toast */
         #toast {
             visibility: hidden;
-            min-width: 180px;
+            min-width: 190px;
             background-color: #0284c7;
-            color: #fff;
+            color: #ffffff;
             text-align: center;
             border-radius: 25px;
-            padding: 9px 16px;
+            padding: 9px 18px;
             position: fixed;
-            z-index: 2000;
+            z-index: 3000;
             left: 50%;
-            bottom: 25px;
+            bottom: 24px;
             transform: translateX(-50%);
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             font-weight: 800;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
             opacity: 0;
             transition: opacity 0.3s, visibility 0.3s;
         }
@@ -825,37 +1053,43 @@
         .footer-tools {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 25px;
+            gap: 8px;
+            margin-top: 30px;
             flex-wrap: wrap;
         }
 
         .btn-ghost {
-            background: rgba(30, 41, 59, 0.6);
+            background: #111a2c;
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 6px 12px;
+            padding: 7px 12px;
             border-radius: 8px;
             font-size: 0.76rem;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-ghost:hover {
+            color: #ffffff;
+            border-color: #38bdf8;
         }
 
         .empty-state {
             text-align: center;
-            padding: 30px 15px;
+            padding: 35px 15px;
             color: var(--text-muted);
             font-size: 0.88rem;
-            background: rgba(30, 41, 59, 0.4);
+            background: #0d1527;
             border-radius: 12px;
             border: 1.5px dashed var(--border);
-            line-height: 1.7;
+            line-height: 1.8;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- هدر اختصاصی و بدون اضافات طبق درخواست شما -->
+    <!-- هدر اختصاصی و تمیز -->
     <div class="header-title">
         <span>🛢️</span>
         <span>دفترچه مهندسی و عملیاتی چاه آزمایی</span>
@@ -872,7 +1106,7 @@
     <div class="tabs">
         <button class="tab-btn active" id="btn-tab-ops" onclick="switchTab('ops')">
             <span>📋</span>
-            <span>گزارشات و فازها</span>
+            <span>فازها و شکست کارها</span>
         </button>
         <button class="tab-btn" id="btn-tab-formulas" onclick="switchTab('formulas')">
             <span>📐</span>
@@ -880,411 +1114,428 @@
         </button>
         <button class="tab-btn" id="btn-tab-tips" onclick="switchTab('tips')">
             <span>💡</span>
-            <span>نکات عمومی</span>
+            <span>نکات عمومی سر چاه</span>
         </button>
     </div>
 
-    <!-- ================= تب اول: گزارشات و فازهای عملیاتی ================= -->
+    <!-- ================= تب اول: فازها و شکست کارها ================= -->
     <div id="ops" class="tab-content active">
-        
-        <!-- نوار انتخاب و مدیریت فاز عملیات (دراپ‌دان) -->
-        <div class="phase-control-panel">
-            <div class="phase-select-header">
-                <span class="phase-label">
-                    <span>📍</span>
-                    <span>انتخاب فاز عملیات چاه‌آزمایی:</span>
-                </span>
-                <span id="phase-counter-badge" class="step-num-badge">۰ سطر</span>
-            </div>
-
-            <div class="phase-select-box">
-                <select id="phase-select" class="phase-select" onchange="changePhase(this.value)">
-                    <!-- به صورت پویا پر می‌شود -->
-                </select>
-                <span class="phase-select-icon">▼</span>
-            </div>
-
-            <div class="phase-actions-row">
-                <button class="btn-mini-action primary" onclick="openAddPhaseModal()">
-                    <span>➕</span> <span>افزودن فاز جدید</span>
-                </button>
-                <button class="btn-mini-action" onclick="openEditCurrentPhaseModal()">
-                    <span>✏️</span> <span>ویرایش نام فاز</span>
-                </button>
-                <button class="btn-mini-action danger" onclick="deleteCurrentPhase()">
-                    <span>🗑️</span> <span>حذف این فاز</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- کادر تجمیعی گزارش رسمی این فاز جهت کپی و ارسال در پیام‌رسان / اداره -->
-        <div class="master-report-card">
-            <div class="master-report-header">
-                <div class="master-report-title">
-                    <span>📄</span>
-                    <span id="master-report-phase-name">گزارش عملیاتی دکل (تمپلیت رسمی)</span>
-                </div>
-                <button class="btn-copy-all" onclick="copyMasterReport()">
-                    <span>📋</span>
-                    <span>کپی کل گزارش فاز</span>
-                </button>
-            </div>
-            <div id="master-report-text" class="master-report-content">
-                <!-- متن یکپارچه جهت کپی -->
-            </div>
-        </div>
-
-        <!-- لیست سطر به سطر شکست کار و نکات عملیاتی -->
-        <div class="section-header-row">
-            <div class="section-title">
-                <span>📑</span>
-                <span>شکست کار عملیات و نکات اجرایی سر چاه</span>
-            </div>
-            <button class="btn-mini-action primary" onclick="openAddStepModal(-1)">
-                <span>➕</span> <span>افزودن سطر به انتها</span>
-            </button>
-        </div>
-
-        <div id="steps-container" class="step-cards-container">
-            <!-- رندر پویا کارت‌های سطر به سطر -->
-        </div>
-
-        <!-- دکمه افزودن سطر جدید در انتهای فاز -->
-        <button class="btn-full" onclick="openAddStepModal(-1)" style="margin-top: 8px;">
-            <span>➕</span>
-            <span>افزودن سطر عملیاتی جدید به این فاز</span>
-        </button>
+        <!-- نمای پویا: یا سطح ۱ (فقط فازها) یا سطح ۲ (داخل فاز انتخاب‌شده) -->
+        <div id="ops-view-container"></div>
     </div>
 
-    <!-- ================= تب دوم: فرمول‌های کاربردی ================= -->
+    <!-- ================= تب دوم: فرمول‌های کاربردی با کسر و معادله واحد ================= -->
     <div id="formulas" class="tab-content">
-        <div class="section-header-row">
-            <div class="section-title">
-                <span>📐</span>
-                <span>فرمول‌های کاربردی چاه‌آزمایی (با خط کسری و واحدها)</span>
+        <div class="toolbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="formula-search" placeholder="جستجو در فرمول‌ها، واحدها و پارامترها..." oninput="renderFormulas()">
             </div>
-            <button class="btn-mini-action primary" onclick="openAddFormulaModal()">
-                <span>➕</span> <span>افزودن فرمول</span>
+            <button class="btn-action-primary" onclick="openAddFormulaModal()">
+                <span>➕</span>
+                <span>افزودن فرمول جدید</span>
             </button>
         </div>
 
-        <div id="formulas-container">
-            <!-- رندر پویا فرمول‌ها -->
-        </div>
+        <div id="formulas-container" class="formula-list"></div>
     </div>
 
-    <!-- ================= تب سوم: نکات عمومی و تجربیات سر چاه ================= -->
+    <!-- ================= تب سوم: نکات عمومی سر چاه ================= -->
     <div id="tips" class="tab-content">
-        <div class="section-header-row">
-            <div class="section-title">
-                <span>💡</span>
-                <span>درس‌آموخته‌ها و نکات ایمنی سر چاه</span>
+        <div class="toolbar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="tip-search" placeholder="جستجو در نکات و درس‌آموخته‌ها..." oninput="renderTips()">
             </div>
-            <button class="btn-mini-action primary" onclick="openAddTipModal()">
-                <span>➕</span> <span>افزودن نکته</span>
+            <button class="btn-action-primary" onclick="openAddTipModal()">
+                <span>➕</span>
+                <span>افزودن نکته جدید</span>
             </button>
         </div>
 
-        <div id="tips-container">
-            <!-- رندر پویا نکات -->
-        </div>
+        <div id="tips-container" class="tips-list"></div>
     </div>
 
-    <!-- پشتیبان‌گیری و بازیابی -->
+    <!-- ابزارهای پشتیبان‌گیری -->
     <div class="footer-tools">
-        <button class="btn-ghost" onclick="exportData()">💾 دانلود پشتیبان اطلاعات (Backup)</button>
+        <button class="btn-ghost" onclick="exportData()">💾 دانلود فایل پشتیبان (Backup)</button>
         <button class="btn-ghost" onclick="document.getElementById('import-file').click()">📂 بازیابی فایل پشتیبان</button>
         <button class="btn-ghost" onclick="resetToDefaults()">🔄 بازنشانی تمپلیت پیش‌فرض چاه‌آزمایی</button>
         <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importData(event)">
     </div>
 </div>
 
-<!-- ================= مودال ثبت / ویرایش فاز عملیاتی ================= -->
+<!-- ================= مودال فاز (افزودن / ویرایش) ================= -->
 <div id="phase-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <div id="phase-modal-title" class="modal-title">افزودن فاز عملیاتی جدید</div>
+            <div class="modal-title" id="phase-modal-title">افزودن فاز عملیاتی</div>
             <button class="modal-close" onclick="closePhaseModal()">&times;</button>
         </div>
         <form id="phase-form">
-            <input type="hidden" id="phase-form-id">
+            <input type="hidden" id="modal-phase-id">
             <div class="form-group">
-                <label>نام فاز عملیاتی *</label>
-                <input type="text" id="phase-form-name" placeholder="مثلاً: اسیدکاری و تمیزکاری چاه" required>
+                <label>نام و عنوان فاز عملیاتی *</label>
+                <input type="text" id="modal-phase-name" placeholder="مثلاً: آماده‌سازی و راندن رشته ابزار درون‌چاهی" required>
             </div>
             <div class="form-group">
-                <label>توضیح کوتاه یا شماره اولویت (اختیاری)</label>
-                <input type="text" id="phase-form-desc" placeholder="مثلاً: عملیات با لوله مغزی سیار یا پمپ تراک">
+                <label>شرح مختصر دامنه این فاز</label>
+                <textarea id="modal-phase-desc" rows="2" placeholder="توضیح هدف عملیاتی این فاز..."></textarea>
             </div>
-            <button type="submit" class="btn-full" style="margin-top: 10px;">ذخیره فاز عملیاتی</button>
+            <button type="submit" class="btn-submit">ذخیره فاز</button>
         </form>
     </div>
 </div>
 
-<!-- ================= مودال ثبت / ویرایش سطر شکست کار ================= -->
+<!-- ================= مودال شکست کار (افزودن / ویرایش) ================= -->
 <div id="step-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <div id="step-modal-title" class="modal-title">ثبت سطر عملیاتی</div>
+            <div class="modal-title" id="step-modal-title">افزودن شکست کار جدید</div>
             <button class="modal-close" onclick="closeStepModal()">&times;</button>
         </div>
         <form id="step-form">
-            <input type="hidden" id="step-form-id">
-            <input type="hidden" id="step-form-insert-index" value="-1">
-            <div class="form-group">
-                <label>عنوان مرحله یا شرح سرفصل *</label>
-                <input type="text" id="step-form-title" placeholder="مثلاً: آماده‌سازی و هیدرولیک تست چکسان‌ها" required>
+            <input type="hidden" id="modal-step-phase-id">
+            <input type="hidden" id="modal-step-id">
+            <input type="hidden" id="modal-step-insert-index">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>عنوان شکست کار *</label>
+                    <input type="text" id="modal-step-title" placeholder="مثلاً: چیدمان و تست خطوط لوله جریانی" required>
+                </div>
+                <div class="form-group">
+                    <label>مدت زمان اجرا (ساعت) *</label>
+                    <input type="number" step="0.25" min="0" id="modal-step-duration" placeholder="مثلاً: 2.5 یا 4" required>
+                </div>
             </div>
+
             <div class="form-group">
-                <label>بازه زمانی / ساعت (اختیاری)</label>
-                <input type="text" id="step-form-time" placeholder="مثلاً: ساعت ۰۸:۰۰ الی ۱۱:۳۰">
+                <label>متن گزارش رسمی دکل به اداره (کلیک روی متن برای کپی) *</label>
+                <textarea id="modal-step-report" rows="4" placeholder="متن استاندارد گزارش روزانه که برای اداره ارسال می‌شود..." required></textarea>
             </div>
+
             <div class="form-group">
-                <label>📄 متن گزارش رسمی دکل (تمپلیت ارسالی به اداره) *</label>
-                <textarea id="step-form-report" rows="3" placeholder="متنی که عیناً در گزارش روزانه دکل ثبت و ارسال می‌شود..." required></textarea>
+                <label>نکات، ترفندها و احتیاطات اجرایی سر چاه (قابل کپی جداگانه)</label>
+                <textarea id="modal-step-tips" rows="4" placeholder="نکات عملیاتی، ترفندهای مهندسی، مواردی که باید سر چاه حواسمان باشد..."></textarea>
             </div>
-            <div class="form-group">
-                <label>💡 نکات و ریزه‌کاری‌های عملیاتی سر چاه (جهت عدم اشتباه) *</label>
-                <textarea id="step-form-tips" rows="3" placeholder="نکات فنی، خطرات، چکش‌کاری، پکر، چارت‌ریدر و مواردی که سر چاه باید مدنظر باشد..." required></textarea>
-            </div>
-            <button type="submit" class="btn-full" style="margin-top: 10px;">ذخیره سطر عملیاتی</button>
+
+            <button type="submit" class="btn-submit">ذخیره شکست کار</button>
         </form>
     </div>
 </div>
 
-<!-- ================= مودال ثبت فرمول جدید ================= -->
+<!-- ================= مودال فرمول (افزودن / ویرایش با کسر و معادله واحد) ================= -->
 <div id="formula-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <div class="modal-title">افزودن فرمول محاسباتی چاه‌آزمایی</div>
+            <div class="modal-title" id="formula-modal-title">افزودن فرمول کاربردی</div>
             <button class="modal-close" onclick="closeFormulaModal()">&times;</button>
         </div>
         <form id="formula-form">
+            <input type="hidden" id="modal-formula-id">
+            
             <div class="form-group">
                 <label>عنوان فرمول *</label>
-                <input type="text" id="formula-title" placeholder="مثلاً: رابطه دبی گاز از چوک (Gilbert)" required>
+                <input type="text" id="modal-formula-title" placeholder="مثلاً: نفوذپذیری سازند از شیب خط هورنر" required>
             </div>
+
+            <div style="background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 12px;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #38bdf8; margin-bottom: 8px;">📐 ۱. فرمول ریاضی محاسباتی</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>متغیر سمت چپ (خروجی) *</label>
+                        <input type="text" id="modal-math-left" placeholder="مثلاً: k" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ضریب ثابت عددی (در صورت وجود)</label>
+                        <input type="text" id="modal-math-factor" placeholder="مثلاً: 162.6">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>صورت کسر ریاضی *</label>
+                        <input type="text" id="modal-math-top" placeholder="مثلاً: q · B · μ" required>
+                    </div>
+                    <div class="form-group">
+                        <label>مخرج کسر ریاضی (در صورت کسر بودن)</label>
+                        <input type="text" id="modal-math-bot" placeholder="مثلاً: m · h">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>عبارت اضافه در سمت راست (اختیاری)</label>
+                    <input type="text" id="modal-math-extra" placeholder="مثلاً: - log(...) + 3.23">
+                </div>
+            </div>
+
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 12px;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #34d399; margin-bottom: 8px;">📏 ۲. معادله واحدهای متناظر (آنالیز ابعادی واحدها)</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>واحد متغیر سمت چپ *</label>
+                        <input type="text" id="modal-unit-left" placeholder="مثلاً: [md]" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ضریب واحد (در صورت وجود)</label>
+                        <input type="text" id="modal-unit-factor" placeholder="معمولاً خالی است">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>صورت کسر واحدها (ضرب واحدها) *</label>
+                        <input type="text" id="modal-unit-top" placeholder="مثلاً: [STB/day] · [bbl/STB] · [cp]" required>
+                    </div>
+                    <div class="form-group">
+                        <label>مخرج کسر واحدها (تقسیم واحدها)</label>
+                        <input type="text" id="modal-unit-bot" placeholder="مثلاً: [psi/cycle] · [ft]">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>عبارت اضافه واحدها (اختیاری)</label>
+                    <input type="text" id="modal-unit-extra" placeholder="مثلاً: [بدون بعد]">
+                </div>
+            </div>
+
             <div class="form-group">
-                <label>صورت کسر (یا عبارت اصلی) *</label>
-                <input type="text" id="formula-top" placeholder="مثلاً: Pwh * S^1.89" required>
+                <label>راهنمای پارامترها و تعاریف مهندسی</label>
+                <textarea id="modal-formula-desc" rows="4" placeholder="تعریف هر متغیر و واحد به همراه نکات مهندسی..."></textarea>
             </div>
-            <div class="form-group">
-                <label>مخرج کسر (در صورت وجود خط کسری)</label>
-                <input type="text" id="formula-bot" placeholder="مثلاً: 435 * R^0.546">
-            </div>
-            <div class="form-group">
-                <label>سمت چپ تساوی (نماد خروجی) *</label>
-                <input type="text" id="formula-left" placeholder="مثلاً: qg =" required>
-            </div>
-            <div class="form-group">
-                <label>شرح پارامترها و واحدها (هر خط: نماد | نام | واحد)</label>
-                <textarea id="formula-params" rows="3" placeholder="Pwh | فشار سرچاهی | psia&#10;S | سایز چوک | 1/64 in&#10;qg | دبی گاز | MMscfd"></textarea>
-            </div>
-            <button type="submit" class="btn-full" style="margin-top: 10px;">ذخیره فرمول</button>
+
+            <button type="submit" class="btn-submit">ذخیره فرمول</button>
         </form>
     </div>
 </div>
 
-<!-- ================= مودال ثبت نکته عمومی ================= -->
+<!-- ================= مودال نکته عمومی (افزودن / ویرایش) ================= -->
 <div id="tip-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <div class="modal-title">افزودن نکته و تجربه سر چاه</div>
+            <div class="modal-title" id="tip-modal-title">افزودن نکته عمومی سر چاه</div>
             <button class="modal-close" onclick="closeTipModal()">&times;</button>
         </div>
         <form id="tip-form">
+            <input type="hidden" id="modal-tip-id">
             <div class="form-group">
-                <label>موضوع نکته *</label>
-                <input type="text" id="tip-title" placeholder="مثلاً: شرایط کالیبراسیون چارت‌ریدر بارتون" required>
+                <label>موضوع / عنوان نکته *</label>
+                <input type="text" id="modal-tip-title" placeholder="مثلاً: تعویض چوک منیفولد حین جریان" required>
             </div>
             <div class="form-group">
-                <label>متن و دستورالعمل *</label>
-                <textarea id="tip-desc" rows="4" placeholder="شرح تجربیات، احتیاط‌ها و جزئیات..." required></textarea>
+                <label>متن و شرح کامل نکته *</label>
+                <textarea id="modal-tip-text" rows="5" placeholder="شرح تجربیات، احتیاطات و چک‌لیست..." required></textarea>
             </div>
-            <button type="submit" class="btn-full" style="margin-top: 10px;">ذخیره نکته</button>
+            <button type="submit" class="btn-submit">ذخیره نکته</button>
         </form>
     </div>
 </div>
 
-<!-- Toast -->
-<div id="toast">متن کپی شد! 📋</div>
+<!-- Toast پیام کپی سریع -->
+<div id="toast">پیام</div>
 
 <script>
-    // آدرس دیتابیس ابری اختصاصی Pantry
-    const CLOUD_URL = atob("aHR0cHM6Ly9nZXRwYW50cnkuY2xvdWQvYXBpdjEvcGFudHJ5LzY3ZWFhMzBlLTBkZWMtNDc5Yi1hMzI0LWYzYWZjMmZmZGNkZi9iYXNrZXQvdGVjaG5pY2FsX25vdGVzX3dlbGx0ZXN0X3Yy");
 
-    // داده‌های پیش‌فرض تخصصی چاه‌آزمایی (با فرار صحیح خطوط در جاوااسکریپت)
+    // آدرس دیتابیس ابری اختصاصی شما در Pantry (سبد اختصاصی technical_notes_welltest_v1 بدون فیلتر در ایران)
+    const CLOUD_URL = atob("aHR0cHM6Ly9nZXRwYW50cnkuY2xvdWQvYXBpdjEvcGFudHJ5LzY3ZWFhMzBlLTBkZWMtNDc5Yi1hMzI0LWYzYWZjMmZmZGNkZi9iYXNrZXQvdGVjaG5pY2FsX25vdGVzX3dlbGx0ZXN0X3Yx");
+
+    // داده‌های نمونه و استاندارد اولیه چاه‌آزمایی (کاملاً فارسی و بدون عبارات انگلیسی)
     const initialPhases = [
         {
             id: 1,
-            name: "۱. آماده‌سازی، بستن خطوط و تست فشار سطحی (Rig-Up & Surface Testing)",
-            desc: "چیدمان و تست کلیه تجهیزات سطحی، منیفولد، لوله‌های فشارقوی و تفکیک‌گر",
+            name: "فاز ۱: آماده‌سازی، بستن خطوط لوله سطحی و تست فشار هیدرواستاتیک",
+            desc: "چیدمان و تست کلیه تجهیزات سطحی، لوله‌های جریانی فشارقوی، چوک منیفولد و تفکیک‌گر تستی",
             steps: [
                 {
                     id: 101,
-                    time: "۰۶:۰۰ الی ۰۹:۰۰",
-                    title: "چیدمان و لنگراندازی خطوط جریان سطحی",
-                    report: "بستن خطوط جریان چکسان از شیر سرچاهی تا چوک منیفولد، اتصال به تفکیک‌گر تستی و خطوط سوزاندن به گودال سوخت. مهار کامل خطوط با کابل و وایپ‌چک.",
-                    tips: "• اطمینان از چکش‌کاری درست چکسان‌ها (Chiksan) و عدم وجود تنش زاویه‌ای در خطوط.\n• مهار کردن تمام خطوط و شیلنگ‌های فلکسیبل با کابل ایمنی (Sling & Whipcheck).\n• بررسی راستای تخلیه شیرهای اطمینان (PRV) به سمت ایمن و دور از پرسنل.",
+                    title: "چیدمان و لنگراندازی خطوط لوله جریانی سطحی و منیفولد",
+                    duration: 3,
+                    report: "بستن خطوط لوله جریانی فشارقوی از شیر فوقانی سرچاهی تا چوک منیفولد، اتصال به تفکیک‌گر آزمایشی و امتداد خطوط تخلیه به سمت گودال سوخت. محکم‌سازی کامل اتصالات و مهار لوله‌ها با کابل‌های ایمنی.",
+                    tips: "• اطمینان از چکش‌کاری دقیق مهره‌های مفصلی چکسان و رفع کامل تنش زاویه‌ای در اتصالات.\n• نصب کابل‌ها و مهارکننده‌های ایمنی در محل اتصال تمامی شیلنگ‌ها و لوله‌های تحت فشار.\n• بازرسی دقیق جهت تخلیه شیرهای اطمینان سرچاهی به سمت ایمن و دور از محل استقرار نفرات.",
                     completed: false
                 },
                 {
                     id: 102,
-                    time: "۰۹:۰۰ الی ۱۱:۳۰",
-                    title: "تست هیدرواستاتیک خطوط سطحی (Surface Pressure Test)",
-                    report: "انجام تست هیدرولیک کم‌فشار (300 psi به مدت ۵ دقیقه) و تست پرفشار (5000 psi به مدت ۱۰ دقیقه) با آب صنعتی و ثبت کامل بر روی چارت‌ریدر تفکیک‌گر.",
-                    tips: "• قبل از شروع بالا بردن فشار، تخلیه کامل حباب‌های هوای خطوط الزامی است.\n• ایجاد منطقه حائل قرمز (Red Zone) و خروج پرسنل غیرضروری از اطراف خطوط پرفشار.\n• همخوانی عدد گیج سرچاهی با گیج دیجیتال و چارت‌ریدر بررسی شود.",
+                    title: "تست هیدرواستاتیک خطوط جریانی و تفکیک‌گر",
+                    duration: 2.5,
+                    report: "انجام تست هیدرواستاتیک کم‌فشار با آب صنعتی در فشار ۳۰۰ پوند بر اینچ مربع به مدت ۵ دقیقه و تست پرفشار در ۵۰۰۰ پوند بر اینچ مربع به مدت ۱۰ دقیقه و ثبت پایدار فشار بر روی چارت‌ریدر تفکیک‌گر.",
+                    tips: "• هواگیری کامل لوله‌ها و محفظه‌ها قبل از شروع بالا بردن فشار جهت جلوگیری از خطرات تراکم گاز.\n• اعلام وضعیت قرمز و تخلیه کلیه نفرات غیرضروری از محوطه خطوط تحت فشار.\n• تطبیق دقیق ارقام گیج دیجیتال سرچاهی با قلم چارت‌ریدر و اطمینان از عدم وجود نشتی در شیرآلات.",
                     completed: false
                 }
             ]
         },
         {
             id: 2,
-            name: "۲. آماده‌سازی و راندن رشته ابزار درون‌چاهی (DST String RIH)",
-            desc: "راندن گیج‌های الکترونیکی حافظه‌دار، پکر و شیرهای هیدرولیکی تستی",
+            name: "فاز ۲: آماده‌سازی، بستن و راندن رشته ابزار درون‌چاهی و تست پکر",
+            desc: "بررسی ادوات آزمایشی، متراژ ابزارآلات، راندن رشته تا عمق هدف و فعال‌سازی پکر مکانیکی",
             steps: [
                 {
                     id: 201,
-                    time: "۱۱:۳۰ الی ۱۴:۰۰",
-                    title: "برنامه‌ریزی و چک سنسورهای فشار و دما (Memory Gauges)",
-                    report: "تنظیم و راه‌اندازی ۴ دستگاه گیج ثبت فشار و دمای حافظه‌دار درون‌چاهی، همگام‌سازی زمان با ساعت رسمی و نصب داخل حامل‌های گیج (Gauge Carrier).",
-                    tips: "• بررسی ولتاژ باتری گیج‌ها قبل از راندن و اطمینان از قرار داشتن اورینگ‌های نو در محفظه.\n• ثبت دقیق ساعت روشن شدن و نرخ نمونه‌برداری (Sampling Rate) در لاگ‌شیت چاه‌آزمایی.\n• اطمینان از بسته شدن ایمن پیچ‌های قفل‌کننده کریر.",
+                    title: "آماده‌سازی، متراژ و بستن ابزارآلات آزمایشی درون‌چاهی",
+                    duration: 4,
+                    report: "بررسی، اندازه‌گیری دقیق ابعاد، کالیبراسیون گیج‌های الکترونیکی ثبت فشار و دما، بستن شیر آزمایش، مفصل‌های ایمنی، لوله‌های جدارضخیم و اتصال پکر مکانیکی به رشته حفاری.",
+                    tips: "• اندازه‌گیری مجدد و ثبت دقیق قطر خارجی و داخلی کلیه ابزارها و لوله‌های وزنه در دفترچه مهندسی.\n• اطمینان از تعویض کلیه اورینگ‌های آب‌بندی با جنس مقاوم به گازهای ترش و دمای بالای مخزن.\n• ثبت دقیق شماره سریال و بازه زمانی ثبت اطلاعات در گیج‌های حافظه‌دار درون‌چاهی قبل از بسته شدن.",
                     completed: false
                 },
                 {
                     id: 202,
-                    time: "۱۴:۰۰ الی ۱۸:۰۰",
-                    title: "راندن رشته ابزار تستی تا عمق هدف و نشاندن پکر",
-                    report: "راندن لوله‌های حفاری حاوی پکر، شیر تستر و ادوات درون‌چاهی تا عمق ۳۲۰۰ متری. اعمال وزن و نشاندن پکر هیدرولیکی طبق برنامه عملیاتی.",
-                    tips: "• کنترل سرعت راندن رشته (RIH) جهت جلوگیری از پدیده Surge Pressure روی سازند.\n• چک کردن میزان وزن معلق رشته (String Weight) قبل از ست کردن پکر جهت محاسبه بار دقیق.",
+                    title: "راندن رشته ابزار به عمق مورد نظر و فعال‌سازی پکر",
+                    duration: 6,
+                    report: "راندن رشته تا عمق پیش‌بینی‌شده بالای لایه مخزنی، چرخش رشته طبق دستورالعمل جهت تنظیم پکر، اِعمال وزن و تایید آب‌بندی پکر با کاهش وزن رشته و پایش فضای دالیز.",
+                    tips: "• کنترل مداوم وزن رشته هنگام پایین رفتن و جلوگیری از اعمال تکانه‌های شدید هیدرولیکی.\n• انجام تست فشار در دالیز جهت حصول اطمینان ۱۰۰٪ از آب‌بندی کامل لاستیک‌های پکر.\n• باز بودن شیر دالیز سرچاهی و پایش مداوم جریان سیال جهت کشف هرگونه نشتی احتمالی پکر.",
                     completed: false
                 }
             ]
         },
         {
             id: 3,
-            name: "۳. باز چاه اولیه و تمیزکاری (Initial Flow & Clean-Up)",
-            desc: "سوراخ‌کاری لایه، باز کردن شیر تستر و هدایت سیال به گودال سوخت",
+            name: "فاز ۳: سوراخ‌کاری، باز چاه و تمیزکاری اولیه از طریق لوله سوزان",
+            desc: "شلیک تفنگ سوراخ‌کاری، گشودن مسیر جریان به مشعل و تخلیه کامل سیالات سنگین حفاری",
             steps: [
                 {
                     id: 301,
-                    time: "۱۸:۰۰ الی ۲۲:۰۰",
-                    title: "باز کردن چاه روی چوک متغیر و هدایت سیال به مشعل",
-                    report: "باز کردن چاه روی چوک متغیر (Adjustable Choke) با سایز 16/64 اینچ. مشاهده ورود گاز و گازوئیل تمیزکاری با فشار سرچاهی 1400 psi. روشن شدن مشعل گودال سوخت.",
-                    tips: "• پایش لحظه‌ای درصد گاز H2S با گازسنج انفرادی و ثابت در اطراف منیفولد و چوک.\n• آماده‌باش کامل تیم آتش‌نشانی و اپراتور مشعل (Ignition System).\n• باز کردن تدریجی چوک برای جلوگیری از وارد آمدن شوک فشاری به مخزن و ایجاد ماسه‌دهی.",
+                    title: "سوراخ‌کاری لایه مخزنی و گشودن اولیه مسیر جریان",
+                    duration: 2,
+                    report: "پرتاب میله فعال‌ساز درون لوله، سوراخ‌کاری موفقیت‌آمیز لایه، باز کردن شیر آزمایش درون‌چاهی، گشودن مسیر جریان به مشعل از طریق چوک ۱۶/۶۴ اینچ و ثبت واکنش اولیه سرچاهی.",
+                    tips: "• رصد دقیق ضربه فشار و رسیدن کوسن سیال به سطح بلافاصله پس از شلیک تفنگ سوراخ‌کاری.\n• استقرار تیم ایمنی با دستگاه‌های تنفسی و گازسنج‌های کالیبره‌شده در محل مشعل و منیفولد.\n• باز کردن تدریجی مسیر چوک‌ها جهت جلوگیری از ورود ماسه و وارد شدن تنش شدید به سازند.",
                     completed: false
                 },
                 {
                     id: 302,
-                    time: "۲۲:۰۰ الی ۰۲:۰۰",
-                    title: "اندازه‌گیری BSW و تعویض به چوک ثابت (Fixed Choke)",
-                    report: "هدایت جریان به چوک ثابت 24/64 اینچ. نمونه‌گیری دوره‌ای هر ۳۰ دقیقه و ثبت BSW برابر با ۰.۲ درصد و گرادیان API برابر با ۳۴.",
-                    tips: "• استفاده از گریز از مرکز (سانتریفیوژ) با حلال و دمولسیفایر استاندارد برای سنجش دقیق آب آزاد.\n• چک کردن فشار تفکیک‌گر و اطمینان از عملکرد درست شیرهای تخلیه اتوماتیک مایع و گاز.",
+                    title: "تمیزکاری چاه و هدایت جریان سیال به مشعل",
+                    duration: 4,
+                    report: "جریان‌دهی پیوسته چاه به گودال سوزاننده جهت تخلیه سیال حفاری، گل‌آلودگی و پسماندها، پایش مداوم فشار سرچاهی و اندازه‌گیری درصد آب و لجن سیال خروجی تا تثبیت شرایط.",
+                    tips: "• نمونه‌گیری مداوم از سیال خروجی در فواصل ۱۵ دقیقه‌ای و تعیین وزن مخصوص و درصد آب همراه.\n• کنترل عدم تشکیل هیدرات در چوک منیفولد و در صورت لزوم آماده‌سازی خط تزریق متانول.\n• ثبت منظم فشار جریانی سرچاهی و دمای سیال خروجی در فرم‌های استاندارد دکل.",
                     completed: false
                 }
             ]
         },
         {
             id: 4,
-            name: "۴. بستن چاه برای ثبت احیای فشار (Pressure Build-Up / PBU)",
-            desc: "بستن چاه از سرچاه یا شیر درون‌چاهی و ثبت ترند بازگشت فشار مخزن",
+            name: "فاز ۴: بستن چاه، ثبت احیای فشار مخزن و ارزیابی نهایی",
+            desc: "بستن چاه از طریق شیر درون‌چاهی به مدت مقرر و ثبت دقیق داده‌های بازیافت فشار لایه",
             steps: [
                 {
                     id: 401,
-                    time: "۰۲:۰۰ الی ۰۸:۰۰",
-                    title: "بستن شیر سرچاهی و شروع دوره ساخت فشار (Shut-In)",
-                    report: "بستن شیر چوک منیفولد و ثبت لحظه‌ای افزایش فشار سرچاهی (WHP) از 1100 psi به 2850 psi در مدت ۲ ساعت اول دوره ساخت فشار (PBU).",
-                    tips: "• کنترل عدم هرگونه نشتی در شیر بالادست چوک؛ کوچک‌ترین نشتی ترند فشار را خراب می‌کند.\n• پایش فشار فضای دالیز (Annulus Pressure) جهت اطمینان از عدم نشتی پکر در تمام طول دوره PBU.\n• ثبت دوره‌ای فشار سرچاهی در فواصل استاندارد (هر ۵ دقیقه در ساعت اول).",
+                    title: "بستن چاه از طریق شیر درون‌چاهی جهت دوره احیای فشار",
+                    duration: 12,
+                    report: "بستن چاه از طریق شیر آزمایش درون‌چاهی به منظور حذف اثرات انباشتگی چاه و ثبت دقیق تغییرات احیای فشار مخزن به مدت ۱۲ ساعت جهت تحلیل تخصصی مخزن.",
+                    tips: "• بستن چاه با شیر درون‌چاهی جهت دستیابی به باکیفیت‌ترین داده‌های مشتق فشار در نرم‌افزارهای تفسیری.\n• اطمینان از بسته بودن همزمان شیرهای سطحی و مانیتورینگ دقیق فشار دالیز در طول کل زمان بستن چاه.\n• ثبت وضعیت چاه و پرهیز از هرگونه عملیات جانبی بر روی دکل که موجب ارتعاش رشته گردد.",
                     completed: false
                 }
             ]
         }
     ];
 
+    // فرمول‌های کاربردی با کسر و معادله واحدها
     const initialFormulas = [
         {
             id: 1,
-            title: "نفوذپذیری سازند از شیب هورنر (Horner Permeability)",
-            left: "k =",
-            top: "162.6 &times; q &times; B &times; &mu;",
-            bot: "m &times; h",
-            params: [
-                { sym: "k", name: "نفوذپذیری مؤثر سازند", unit: "md" },
-                { sym: "q", name: "دبی جریان مایع", unit: "STB/day" },
-                { sym: "B", name: "ضریب حجم سازندی نفت (FVF)", unit: "bbl/STB" },
-                { sym: "μ", name: "گرانروی سیال مخزن (Viscosity)", unit: "cp" },
-                { sym: "m", name: "شیب خط مستقیم هورنر", unit: "psi/cycle" },
-                { sym: "h", name: "ضخامت مؤثر لایه بهره‌ده", unit: "ft" }
-            ]
+            title: "نفوذپذیری سازند از شیب خط هورنر",
+            mathLeft: "k",
+            mathFactor: "162.6",
+            mathTop: "q · B · μ",
+            mathBot: "m · h",
+            mathExtra: "",
+            unitLeft: "[md]",
+            unitFactor: "",
+            unitTop: "[STB/day] · [bbl/STB] · [cp]",
+            unitBot: "[psi/cycle] · [ft]",
+            unitExtra: "",
+            desc: "k: نفوذپذیری موثر سازند (میلی‌دارسی)\nq: دبی تولیدی نفت (بشکه استاندارد در روز)\nB: ضریب تبدیل حجم سازند نفت (بشکه مخزن بر بشکه استاندارد)\nμ: گرانروی سیال مخزن (سنتی‌پواز)\nm: شیب خط مستقیم نیمه‌لوگاریتمی نمودار هورنر (پوند بر اینچ مربع بر چرخه)\nh: ضخامت خالص لایه تولیدی (فوت)"
         },
         {
             id: 2,
-            title: "ضریب پوسته یا آسیب سازند (Skin Factor)",
-            left: "s = 1.151 &times; [",
-            top: "(P<sub>1hr</sub> - P<sub>wf</sub>)",
-            bot: "m",
-            extraRight: " - log( <span class='frac'><span class='top'>k</span><span class='bot'>&phi; &mu; c<sub>t</sub> r<sub>w</sub><sup>2</sup></span></span> ) + 3.23 ]",
-            params: [
-                { sym: "s", name: "ضریب پوسته (Skin Factor)", unit: "بدون بعد" },
-                { sym: "P1hr", name: "فشار تعمیم‌یافته پس از ۱ ساعت بستن چاه", unit: "psi" },
-                { sym: "Pwf", name: "فشار ته‌چاهی در لحظه قبل از بستن چاه", unit: "psi" },
-                { sym: "rw", name: "شعاع چاه (Wellbore Radius)", unit: "ft" },
-                { sym: "ct", name: "تراکم‌پذیری کل سیستم", unit: "1/psi" }
-            ]
+            title: "افت فشار ناشی از پوسته در دهانه چاه",
+            mathLeft: "ΔP_skin",
+            mathFactor: "0.869",
+            mathTop: "m · s",
+            mathBot: "",
+            mathExtra: "",
+            unitLeft: "[psi]",
+            unitFactor: "",
+            unitTop: "[psi/cycle] · [بدون بعد]",
+            unitBot: "",
+            unitExtra: "",
+            desc: "ΔP_skin: افت فشار اضافه در دیواره چاه ناشی از پوسته و آسیب سازند (psi)\nm: شیب خط مستقیم هورنر (psi/cycle)\ns: ضریب پوسته (بدون بعد: مثبت نشانه آسیب، منفی نشانه انگیزش)"
         },
         {
             id: 3,
-            title: "افت فشار ناشی از آسیب سازند (Skin Pressure Drop)",
-            left: "&Delta;P<sub>skin</sub> =",
-            top: "0.869 &times; m &times; s",
-            bot: "",
-            params: [
-                { sym: "ΔPskin", name: "افت فشار پوسته در دهانه چاه", unit: "psi" },
-                { sym: "m", name: "شیب خط هورنر", unit: "psi/cycle" },
-                { sym: "s", name: "ضریب پوسته", unit: "-" }
-            ]
+            title: "شاخص بهره‌دهی چاه",
+            mathLeft: "PI",
+            mathFactor: "",
+            mathTop: "q",
+            mathBot: "P_R - P_wf",
+            mathExtra: "",
+            unitLeft: "[PI]",
+            unitFactor: "",
+            unitTop: "[STB/day]",
+            unitBot: "[psi]",
+            unitExtra: "",
+            desc: "PI: شاخص بهره‌دهی چاه (بشکه در روز بر پوند بر اینچ مربع)\nq: دبی جریان تثبیت‌شده چاه (STB/day)\nP_R: فشار استاتیک اولیه یا میانگین مخزن (psi)\nP_wf: فشار جریانی ته‌چاهی در دبی q (psi)"
         },
         {
             id: 4,
-            title: "شاخص بهره‌دهی چاه (Productivity Index - PI)",
-            left: "PI =",
-            top: "q",
-            bot: "P&#772;<sub>R</sub> - P<sub>wf</sub>",
-            params: [
-                { sym: "PI", name: "شاخص بهره‌دهی چاه", unit: "STB/day/psi" },
-                { sym: "q", name: "دبی پایدار جریان", unit: "STB/day" },
-                { sym: "P̄R", name: "فشار استاتیک متوسط مخزن", unit: "psi" },
-                { sym: "Pwf", name: "فشار جریان ته‌چاهی", unit: "psi" }
-            ]
+            title: "دبی جریان گاز از چوک سطحی",
+            mathLeft: "q_g",
+            mathFactor: "C",
+            mathTop: "P_wh · d²",
+            mathBot: "√(SG_g · T)",
+            mathExtra: "",
+            unitLeft: "[MMSCF/day]",
+            unitFactor: "",
+            unitTop: "[psi] · [64th inch]²",
+            unitBot: "√([SG] · [°R])",
+            unitExtra: "",
+            desc: "q_g: دبی جریان گاز (میلیون فوت مکعب استاندارد در روز)\nP_wh: فشار جریانی بالادست چوک (psi)\nd: قطر دهانه چوک (بر حسب ۶۴ام اینچ)\nSG_g: وزن مخصوص گاز نسبت به هوا (بدون بعد)\nT: دمای جریانی گاز بر حسب رانکین (°R = °F + 460)\nC: ضریب مشخصه و کالیبراسیون چوک"
+        },
+        {
+            id: 5,
+            title: "گرادیان فشار هیدرواستاتیک ستون سیال",
+            mathLeft: "G",
+            mathFactor: "0.052",
+            mathTop: "ρ_mud",
+            mathBot: "",
+            mathExtra: "",
+            unitLeft: "[psi/ft]",
+            unitFactor: "0.052",
+            unitTop: "[ppg]",
+            unitBot: "",
+            unitExtra: "",
+            desc: "G: گرادیان هیدرواستاتیک فشار در چاه (پوند بر اینچ مربع بر هر فوت عمق)\nρ_mud: دانسیته و وزن گل حفاری یا سیال چاه (پوند بر گالن / ppg)\n0.052: ضریب تبدیل ابعادی واحدها"
         }
     ];
 
+    // نکات عمومی و تجربیات سر چاه
     const initialTips = [
         {
             id: 1,
-            title: "دستورالعمل و ایمنی تعویض چوک (Choke Bean Replacement)",
-            desc: "۱. قبل از شل کردن پیچ‌های کلاهک چوک، حتماً شیرهای ایزولاسیون بالادست و پایین‌دست منیفولد را کاملاً ببندید.\n۲. فشار محبوس درون محفظه چوک را از شیر سوزنی تخلیه (Bleed-off) به صفر برسانید و از خروج سیال مطمئن شوید.\n۳. هنگام باز کردن کپ، هرگز در امتداد مستقیم پیشانی کلاهک نایستید.\n۴. سایز چوک جدید را قبل از بستن حتماً با گیج کالیپر مخصوص (Go/No-Go) اندازه بگیرید تا با گزارش اشتباه نشود."
+            title: "دستورالعمل تعویض چوک منیفولد حین جریان",
+            text: "• پیش از تعویض چوک، خط دوم منیفولد (مسیر موازی) را به آرامی باز کرده و تعادل فشار برقرار کنید.\n• اطمینان از تخلیه فشار محفظه چوک از طریق شیر بلید (Bleed-off) قبل از باز کردن درپوش الزامی است.\n• اندازه چوک جدید را حتماً با گیج کالیبره کولیس اندازه‌گیری کرده و نوع آن (مثلاً مثبت یا قابل تنظیم) را بررسی کنید."
         },
         {
             id: 2,
-            title: "الزامات نمونه‌گیری تحت فشار ته‌چاهی (BHS Sampling)",
-            desc: "• نمونه‌گیری BHS باید پس از یک دوره جریان ملایم با حداقل افت فشار (Drawdown) و قبل از رسیدن فشار به نقطه حباب (Bubble Point) انجام شود.\n• همخوانی فشار محفظه بطری نمونه‌گیر با فشار ته‌چاهی گیج‌ها قبل از خارج کردن نمونه از محفظه حتماً در لاگ ثبت گردد.\n• نمونه‌گیرها نباید در شرایط تلاطم شدید یا لرزش لوله‌ها رانده شوند."
+            title: "نکات حیاتی نمونه‌گیری سیال تحت فشار سر چاه",
+            text: "• نمونه‌گیری هیدروکربوری تنها پس از تثبیت کامل دبی و فشار تفکیک‌گر انجام شود (حداقل ۲ ساعت پایداری).\n• تمیزکاری کامل اتصالات نمونه‌گیری با سیال خط و هواگیری کامل محفظه کپسول با روش تخلیه تدریجی صورت پذیرد.\n• ثبت دقیق و همزمان فشار و دمای محل نمونه‌گیری بر روی برچسب شناسنامه کپسول نمونه ضروری است."
         },
         {
             id: 3,
             title: "اقدامات احتیاطی مواجهه با گاز H2S در تفکیک‌گر",
-            desc: "• کالیبراسیون گازسنج‌های شخصی و استقرار دستگاه تنفسی (SCBA) در ایستگاه ایمن سر چاه الزامی است.\n• مسیر بادنماها (Wind Sock) باید مرتباً توسط کلیه نفرات پایش شود.\n• تزریق متناوب ماده بیوساید و خنثی‌کننده هیدروژن سولفوره (Scavenger) در خط تفکیک‌گر در صورت لزوم."
+            text: "• کالیبراسیون گازسنج‌های شخصی و استقرار دستگاه تنفسی در ایستگاه ایمن سر چاه الزامی است.\n• مسیر بادنماها باید مرتباً توسط کلیه نفرات پایش شود.\n• در صورت مشاهده علائم گاز ترش، بلافاصله پروتکل‌های تخلیه منطقه پرخطر اجرا گردد."
         }
     ];
 
     // متغیرهای حالت برنامه
-    let phases = JSON.parse(localStorage.getItem('wt_tech_phases_v2')) || initialPhases;
-    let formulas = JSON.parse(localStorage.getItem('wt_tech_formulas_v2')) || initialFormulas;
-    let tips = JSON.parse(localStorage.getItem('wt_tech_tips_v2')) || initialTips;
-    let currentPhaseId = parseInt(localStorage.getItem('wt_tech_active_phase_v2'), 10) || (phases[0] ? phases[0].id : 1);
+    let phases = JSON.parse(localStorage.getItem('wt_tech_v3_phases')) || 
+                 JSON.parse(localStorage.getItem('wt_tech_phases_v2')) || initialPhases;
+    let formulas = JSON.parse(localStorage.getItem('wt_tech_v3_formulas')) || 
+                   JSON.parse(localStorage.getItem('wt_tech_formulas_v2')) || initialFormulas;
+    let tips = JSON.parse(localStorage.getItem('wt_tech_v3_tips')) || 
+               JSON.parse(localStorage.getItem('wt_tech_tips_v2')) || initialTips;
+    
+    // متغیر سلسله‌مراتب: اگر null باشد سطح ۱ (لیست فازها) و اگر عدد باشد سطح ۲ (شکست‌کارهای آن فاز)
+    let selectedPhaseId = null;
     let isSyncing = false;
-    let hasPendingSync = localStorage.getItem('wt_tech_pending_v2') === 'true';
+    let hasPendingSync = localStorage.getItem('wt_tech_v3_pending') === 'true';
 
+    // توابع نمایش پیام و نشانگر
     function showToast(msg) {
         const toast = document.getElementById('toast');
         toast.innerText = msg;
@@ -1306,20 +1557,23 @@
         const targetBtn = document.getElementById('btn-tab-' + tabId);
         if (targetContent) targetContent.classList.add('active');
         if (targetBtn) targetBtn.classList.add('active');
+
+        if (tabId === 'formulas') renderFormulas();
+        if (tabId === 'tips') renderTips();
+        if (tabId === 'ops') renderOpsView();
     }
 
-    // ذخیره در حافظه محلی و ابری
+    // ذخیره در حافظه محلی و ارسال به سرور Pantry
     function saveState() {
-        localStorage.setItem('wt_tech_phases_v2', JSON.stringify(phases));
-        localStorage.setItem('wt_tech_formulas_v2', JSON.stringify(formulas));
-        localStorage.setItem('wt_tech_tips_v2', JSON.stringify(tips));
-        localStorage.setItem('wt_tech_active_phase_v2', currentPhaseId.toString());
-        localStorage.setItem('wt_tech_pending_v2', 'true');
+        localStorage.setItem('wt_tech_v3_phases', JSON.stringify(phases));
+        localStorage.setItem('wt_tech_v3_formulas', JSON.stringify(formulas));
+        localStorage.setItem('wt_tech_v3_tips', JSON.stringify(tips));
+        localStorage.setItem('wt_tech_v3_updated_at', Date.now().toString());
         hasPendingSync = true;
+        localStorage.setItem('wt_tech_v3_pending', 'true');
         pushToCloud();
     }
 
-    // ارسال به سرور Pantry
     async function pushToCloud() {
         if (isSyncing) return;
         isSyncing = true;
@@ -1330,7 +1584,6 @@
                 phases: phases,
                 formulas: formulas,
                 tips: tips,
-                currentPhaseId: currentPhaseId,
                 updatedAt: Date.now()
             };
 
@@ -1342,26 +1595,25 @@
 
             if (response.ok) {
                 hasPendingSync = false;
-                localStorage.setItem('wt_tech_pending_v2', 'false');
-                updateSyncBadge('online', '☁️ همگام آنلاین');
+                localStorage.setItem('wt_tech_v3_pending', 'false');
+                updateSyncBadge('online', '☁️ متصل و همگام آنلاین');
             } else {
-                throw new Error('Status: ' + response.status);
+                throw new Error('Server status: ' + response.status);
             }
         } catch (err) {
-            console.warn('Sync push error:', err);
+            console.warn('Push error:', err);
             hasPendingSync = true;
-            localStorage.setItem('wt_tech_pending_v2', 'true');
+            localStorage.setItem('wt_tech_v3_pending', 'true');
             if (!navigator.onLine) {
-                updateSyncBadge('offline', '⚠️ آفلاین (ذخیره در گوشی)');
+                updateSyncBadge('offline', '⚠️ آفلاین (اطلاعات در گوشی امن است)');
             } else {
-                updateSyncBadge('offline', '⏳ در صف ارسال');
+                updateSyncBadge('syncing', '⏳ ذخیره در گوشی (در انتظار اینترنت)');
             }
         } finally {
             isSyncing = false;
         }
     }
 
-    // دریافت داده‌ها از سرور Pantry
     async function pullFromCloud(silent = true) {
         if (isSyncing) return;
         if (hasPendingSync) {
@@ -1370,7 +1622,7 @@
         }
 
         isSyncing = true;
-        if (!silent) updateSyncBadge('syncing', '🔄 در حال دریافت...');
+        if (!silent) updateSyncBadge('syncing', '🔄 در حال بررسی تغییرات...');
 
         try {
             const response = await fetch(CLOUD_URL, {
@@ -1380,29 +1632,35 @@
 
             if (response.ok) {
                 const data = await response.json();
-                if (data && Array.isArray(data.phases)) {
-                    phases = data.phases;
-                    if (Array.isArray(data.formulas)) formulas = data.formulas;
-                    if (Array.isArray(data.tips)) tips = data.tips;
-                    if (data.currentPhaseId) currentPhaseId = data.currentPhaseId;
+                if (data && (Array.isArray(data.phases) || Array.isArray(data.formulas))) {
+                    const cloudUpdatedAt = data.updatedAt || 0;
+                    const localUpdatedAt = parseInt(localStorage.getItem('wt_tech_v3_updated_at') || '0', 10);
 
-                    localStorage.setItem('wt_tech_phases_v2', JSON.stringify(phases));
-                    localStorage.setItem('wt_tech_formulas_v2', JSON.stringify(formulas));
-                    localStorage.setItem('wt_tech_tips_v2', JSON.stringify(tips));
-                    renderAll();
+                    if (cloudUpdatedAt >= localUpdatedAt || !localStorage.getItem('wt_tech_v3_phases')) {
+                        if (Array.isArray(data.phases) && data.phases.length > 0) phases = data.phases;
+                        if (Array.isArray(data.formulas) && data.formulas.length > 0) formulas = data.formulas;
+                        if (Array.isArray(data.tips) && data.tips.length > 0) tips = data.tips;
+                        
+                        localStorage.setItem('wt_tech_v3_phases', JSON.stringify(phases));
+                        localStorage.setItem('wt_tech_v3_formulas', JSON.stringify(formulas));
+                        localStorage.setItem('wt_tech_v3_tips', JSON.stringify(tips));
+                        localStorage.setItem('wt_tech_v3_updated_at', cloudUpdatedAt.toString());
+
+                        renderOpsView();
+                        renderFormulas();
+                        renderTips();
+                    }
                 }
-                updateSyncBadge('online', '☁️ همگام آنلاین');
+                updateSyncBadge('online', '☁️ متصل و همگام آنلاین');
             } else if (response.status === 400 || response.status === 404) {
                 isSyncing = false;
                 await pushToCloud();
                 return;
             }
         } catch (err) {
-            console.warn('Sync pull error:', err);
+            console.warn('Pull error:', err);
             if (!navigator.onLine) {
-                updateSyncBadge('offline', '⚠️ آفلاین (حافظه محلی)');
-            } else {
-                updateSyncBadge('offline', '⚠️ عدم اتصال به سرور');
+                updateSyncBadge('offline', '⚠️ آفلاین (اطلاعات در گوشی امن است)');
             }
         } finally {
             isSyncing = false;
@@ -1410,219 +1668,360 @@
     }
 
     function manualSync() {
-        showToast('در حال همگام‌سازی... 🔄');
+        showToast('در حال همگام‌سازی ابری... 🔄');
         if (hasPendingSync) pushToCloud();
         else pullFromCloud(false);
     }
 
-    // ================= فازها و گزارشات =================
-    function getActivePhase() {
-        let p = phases.find(item => item.id === currentPhaseId);
-        if (!p && phases.length > 0) {
-            p = phases[0];
-            currentPhaseId = p.id;
-        }
-        return p;
-    }
-
-    function changePhase(val) {
-        currentPhaseId = parseInt(val, 10);
-        localStorage.setItem('wt_tech_active_phase_v2', currentPhaseId.toString());
-        renderPhaseSelector();
-        renderSteps();
-    }
-
-    function renderPhaseSelector() {
-        const select = document.getElementById('phase-select');
-        select.innerHTML = '';
-
-        if (phases.length === 0) {
-            select.innerHTML = '<option value="">هیچ فازی تعریف نشده است</option>';
+    // ================= کپی اختصاصی با کلیک مستقیم روی متن =================
+    function copyReportText(text, el, event) {
+        if (event) event.stopPropagation();
+        if (!text || text.trim() === '') {
+            showToast('متنی برای کپی وجود ندارد');
             return;
         }
 
-        phases.forEach((p, idx) => {
-            const opt = document.createElement('option');
-            opt.value = p.id;
-            opt.innerText = p.name;
-            if (p.id === currentPhaseId) opt.selected = true;
-            select.appendChild(opt);
-        });
-    }
-
-    function renderSteps() {
-        const phase = getActivePhase();
-        const container = document.getElementById('steps-container');
-        const masterReportEl = document.getElementById('master-report-text');
-        const phaseNameHeader = document.getElementById('master-report-phase-name');
-        const counterBadge = document.getElementById('phase-counter-badge');
-
-        container.innerHTML = '';
-
-        if (!phase) {
-            container.innerHTML = '<div class="empty-state">فازی یافت نشد. یک فاز جدید ایجاد کنید.</div>';
-            masterReportEl.innerText = 'هنوز فازی انتخاب نشده است.';
-            phaseNameHeader.innerText = 'گزارش رسمی';
-            counterBadge.innerText = '۰ سطر';
-            return;
-        }
-
-        phaseNameHeader.innerText = phase.name;
-        counterBadge.innerText = `${(phase.steps || []).length} سطر عملیاتی`;
-
-        // تولید متن یکپارچه جهت کپی برای پیام‌رسان / اداره
-        let masterText = `*📋 گزارش عملیات چاه‌آزمایی*\n*فاز: ${phase.name}*\n----------------------------------\n`;
-        if (phase.steps && phase.steps.length > 0) {
-            phase.steps.forEach((s, idx) => {
-                const timePrefix = s.time ? `[${s.time}] ` : '';
-                masterText += `${idx + 1}. ${timePrefix}${s.title}\n- ${s.report}\n\n`;
-            });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('متن گزارش رسمی کپی شد 📋');
+                triggerCopyAnim(el, 'copy-active');
+            }).catch(() => fallbackCopy(text, 'متن گزارش رسمی کپی شد 📋'));
         } else {
-            masterText += '(هنوز سطری برای این فاز ثبت نشده است)';
+            fallbackCopy(text, 'متن گزارش رسمی کپی شد 📋');
         }
-        masterReportEl.innerText = masterText.replace(/\\n/g, '\n');
+    }
 
-        // رندر کارت‌های سطر به سطر
-        if (!phase.steps || phase.steps.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <strong>هنوز سطری برای این فاز ثبت نشده است.</strong><br>
-                    از دکمه «➕ افزودن سطر عملیاتی جدید» زیر استفاده کنید تا گام‌های گزارش و نکات سر چاه را بنویسید.
-                </div>`;
+    function copyTipsText(text, el, event) {
+        if (event) event.stopPropagation();
+        if (!text || text.trim() === '') {
+            showToast('نکته‌ای برای کپی وجود ندارد');
             return;
         }
 
-        phase.steps.forEach((step, idx) => {
-            // خط درج سطر بینابینی (به جز قبل از اولین سطر)
-            if (idx > 0) {
-                const insertRow = document.createElement('div');
-                insertRow.className = 'insert-between-row';
-                insertRow.innerHTML = `<button class="btn-insert-between" onclick="openAddStepModal(${idx})">➕ درج سطر جدید در این نقطه</button>`;
-                container.appendChild(insertRow);
-            }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('نکات عملیاتی سر چاه کپی شد 💡');
+                triggerCopyAnim(el, 'copy-active-tips');
+            }).catch(() => fallbackCopy(text, 'نکات عملیاتی سر چاه کپی شد 💡'));
+        } else {
+            fallbackCopy(text, 'نکات عملیاتی سر چاه کپی شد 💡');
+        }
+    }
 
-            const card = document.createElement('div');
-            card.className = `step-card ${step.completed ? 'completed' : ''}`;
-            card.innerHTML = `
-                <div class="step-top">
-                    <div class="step-meta-row">
-                        <div class="step-title-area">
-                            <span class="step-num-badge">گام ${idx + 1}</span>
-                            <span>${step.title}</span>
-                        </div>
-                        ${step.time ? `<span class="step-time-badge">⏰ ${step.time}</span>` : ''}
-                    </div>
+    function triggerCopyAnim(el, className) {
+        if (!el) return;
+        el.classList.add(className);
+        setTimeout(() => el.classList.remove(className), 450);
+    }
 
-                    <div class="step-report-body">
-                        <strong>📄 گزارش رسمی:</strong> ${step.report}
-                    </div>
+    function fallbackCopy(text, successMsg) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        showToast(successMsg);
+    }
 
-                    <div class="step-report-actions">
-                        <span style="color: var(--text-muted);">جهت ارسال در پیام‌رسان دکل</span>
-                        <button class="btn-copy-line" onclick="copyStepText('${step.id}')">
-                            <span>📋</span> <span>کپی این خط</span>
-                        </button>
-                    </div>
+    // ================= کشویی کردن نکات عملیاتی سر چاه با فلش =================
+    function toggleStepTips(stepId, btn, event) {
+        if (event) event.stopPropagation();
+        const box = document.getElementById('tips-box-' + stepId);
+        if (!box) return;
+        const isClosed = box.style.display === 'none' || box.style.display === '';
+        if (isClosed) {
+            box.style.display = 'block';
+            btn.classList.add('open');
+            btn.querySelector('.tips-toggle-arrow').innerText = '▲';
+            btn.querySelector('.tips-toggle-text').innerText = 'بستن نکات عملیاتی سر چاه';
+        } else {
+            box.style.display = 'none';
+            btn.classList.remove('open');
+            btn.querySelector('.tips-toggle-arrow').innerText = '▼';
+            btn.querySelector('.tips-toggle-text').innerText = 'مشاهده نکات عملیاتی و ترفندهای سر چاه';
+        }
+    }
+
+    // ================= مدیریت نمای فازها و شکست‌کارها (سطوح ۱ و ۲) =================
+    function renderOpsView() {
+        const container = document.getElementById('ops-view-container');
+        if (!container) return;
+
+        if (selectedPhaseId === null) {
+            renderLevel1Phases(container);
+        } else {
+            renderLevel2Steps(container, selectedPhaseId);
+        }
+    }
+
+    // سطح ۱: فقط فازهای اصلی
+    function renderLevel1Phases(container) {
+        const query = (document.getElementById('ops-search-input')?.value || '').toLowerCase();
+        
+        let filteredPhases = phases;
+        if (query) {
+            filteredPhases = phases.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                (p.desc && p.desc.toLowerCase().includes(query)) ||
+                (p.steps && p.steps.some(s => s.title.toLowerCase().includes(query) || s.report.toLowerCase().includes(query) || s.tips.toLowerCase().includes(query)))
+            );
+        }
+
+        let html = `
+            <div class="toolbar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="ops-search-input" value="${escapeHtml(query)}" placeholder="جستجو در فازها، گزارشات و نکات..." oninput="renderOpsView()">
                 </div>
-
-                <!-- کشویی نکات عملیاتی سر چاه -->
-                <button class="step-drawer-toggle" onclick="toggleDrawer(${step.id})">
-                    <span>💡 مشاهده نکات اجرایی و ریزه‌کاری‌های سر چاه</span>
-                    <span id="drawer-arrow-${step.id}">▼</span>
+                <button class="btn-action-primary" onclick="openAddPhaseModal()">
+                    <span>➕</span>
+                    <span>افزودن فاز جدید</span>
                 </button>
-                <div id="drawer-content-${step.id}" class="step-drawer-content">
-                    <strong>⚠️ نکات فنی و ترفندهای عملیاتی سر چاه:</strong>\n${step.tips}
-                </div>
+            </div>
 
-                <div class="step-bottom-bar">
-                    <label class="step-check-label">
-                        <input type="checkbox" ${step.completed ? 'checked' : ''} onchange="toggleStepComplete(${step.id})">
-                        <span>انجام شد سر چاه</span>
-                    </label>
+            <div class="phase-section-title">
+                <span>📍 فازهای اصلی عملیات چاه‌آزمایی (یک فاز را انتخاب کنید):</span>
+                <span style="font-size: 0.78rem; color: #38bdf8;">${phases.length.toLocaleString('fa-IR')} فاز</span>
+            </div>
 
-                    <div class="step-card-btns">
-                        <button class="btn-card-icon" title="ویرایش" onclick="openEditStepModal(${step.id})">✏️</button>
-                        <button class="btn-card-icon" title="حرکت به بالا" onclick="moveStep(${idx}, -1)">⬆</button>
-                        <button class="btn-card-icon" title="حرکت به پایین" onclick="moveStep(${idx}, 1)">⬇</button>
-                        <button class="btn-card-icon delete" title="حذف" onclick="deleteStep(${step.id})">🗑️</button>
+            <div class="phase-list">
+        `;
+
+        if (filteredPhases.length === 0) {
+            html += `<div class="empty-state">هیچ فاز عملیاتی یافت نشد.</div>`;
+        } else {
+            filteredPhases.forEach((phase, idx) => {
+                const stepCount = (phase.steps || []).length;
+                const totalHours = (phase.steps || []).reduce((sum, s) => sum + (parseFloat(s.duration) || 0), 0);
+                const hoursFormatted = totalHours.toLocaleString('fa-IR', { maximumFractionDigits: 2 });
+
+                html += `
+                    <div class="phase-card" onclick="selectPhase(${phase.id})">
+                        <div class="phase-card-top">
+                            <div class="phase-badge-title">
+                                <span class="phase-badge">فاز ${(idx + 1).toLocaleString('fa-IR')}</span>
+                                <span class="phase-name">${escapeHtml(phase.name)}</span>
+                            </div>
+                        </div>
+
+                        ${phase.desc ? `<div class="phase-desc">${escapeHtml(phase.desc)}</div>` : ''}
+
+                        <div class="phase-metrics-bar">
+                            <div class="phase-metric-item">
+                                <span>📋</span>
+                                <span>تعداد مراحل:</span>
+                                <span class="phase-metric-highlight">${stepCount.toLocaleString('fa-IR')} شکست کار</span>
+                            </div>
+                            <div class="phase-metric-item">
+                                <span>⏱️</span>
+                                <span>مجموع زمان فاز:</span>
+                                <span class="phase-metric-time">${hoursFormatted} ساعت</span>
+                            </div>
+                        </div>
+
+                        <div class="phase-card-footer" onclick="event.stopPropagation()">
+                            <button class="btn-enter-phase" onclick="selectPhase(${phase.id})">
+                                <span>مشاهده شکست کارها</span>
+                                <span>◀</span>
+                            </button>
+                            <div class="phase-manage-btns">
+                                <button class="btn-mini-tool" title="ویرایش نام فاز" onclick="openEditPhaseModal(${phase.id}, event)">✏️</button>
+                                <button class="btn-mini-tool" title="انتقال به بالا" onclick="movePhase(${idx}, -1, event)">⬆</button>
+                                <button class="btn-mini-tool" title="انتقال به پایین" onclick="movePhase(${idx}, 1, event)">⬇</button>
+                                <button class="btn-mini-tool delete" title="حذف فاز" onclick="deletePhase(${phase.id}, event)">🗑️</button>
+                            </div>
+                        </div>
                     </div>
+                `;
+            });
+        }
+
+        html += `</div>`;
+        container.innerHTML = html;
+    }
+
+    function selectPhase(phaseId) {
+        selectedPhaseId = phaseId;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        renderOpsView();
+    }
+
+    function backToPhasesList() {
+        selectedPhaseId = null;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        renderOpsView();
+    }
+
+    // سطح ۲: نمایش شکست‌کارهای داخل فاز انتخاب‌شده
+    function renderLevel2Steps(container, phaseId) {
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) {
+            selectedPhaseId = null;
+            renderOpsView();
+            return;
+        }
+
+        const steps = phase.steps || [];
+        const totalHours = steps.reduce((sum, s) => sum + (parseFloat(s.duration) || 0), 0);
+        const hoursFormatted = totalHours.toLocaleString('fa-IR', { maximumFractionDigits: 2 });
+
+        let html = `
+            <!-- نوار ناوبری بازگشت به فازها و اطلاعات فاز جاری -->
+            <div class="phase-nav-banner">
+                <button class="btn-back-to-phases" onclick="backToPhasesList()">
+                    <span>◀</span>
+                    <span>بازگشت به لیست فازها</span>
+                </button>
+                <div class="active-phase-info">
+                    <div class="active-phase-title-text">${escapeHtml(phase.name)}</div>
+                    <span class="active-phase-hours-badge">
+                        <span>⏱️ مجموع زمان فاز:</span>
+                        <strong>${hoursFormatted} ساعت</strong>
+                        <span>(${steps.length.toLocaleString('fa-IR')} مرحله)</span>
+                    </span>
+                </div>
+                <button class="btn-action-primary" onclick="openAddStepModal(${phase.id}, -1)">
+                    <span>➕</span>
+                    <span>افزودن شکست کار</span>
+                </button>
+            </div>
+
+            <div class="step-list">
+        `;
+
+        if (steps.length === 0) {
+            html += `
+                <div class="empty-state">
+                    هنوز هیچ شکست کاری در این فاز ثبت نشده است.<br>
+                    از دکمه بالا برای افزودن اولین شکست کار استفاده کنید.
                 </div>
             `;
-            container.appendChild(card);
-        });
-    }
-
-    function toggleDrawer(id) {
-        const content = document.getElementById('drawer-content-' + id);
-        const arrow = document.getElementById('drawer-arrow-' + id);
-        if (!content) return;
-        if (content.classList.contains('open')) {
-            content.classList.remove('open');
-            if (arrow) arrow.innerText = '▼';
         } else {
-            content.classList.add('open');
-            if (arrow) arrow.innerText = '▲';
+            steps.forEach((step, sIdx) => {
+                const isCompleted = step.completed === true;
+                const durationVal = parseFloat(step.duration) || 0;
+                const durationFormatted = durationVal > 0 ? durationVal.toLocaleString('fa-IR', { maximumFractionDigits: 2 }) : '۰';
+
+                html += `
+                    <!-- دکمه بینابینی درج سطر -->
+                    <div class="insert-divider">
+                        <button class="btn-insert-interstitial" onclick="openAddStepModal(${phase.id}, ${sIdx})">
+                            ➕ درج شکست کار در این نقطه
+                        </button>
+                    </div>
+
+                    <!-- کارت شکست کار -->
+                    <div class="step-card ${isCompleted ? 'completed' : ''}" id="step-card-${step.id}">
+                        <div class="step-card-header">
+                            <div class="step-title-area">
+                                <span class="step-index-badge">ردیف ${(sIdx + 1).toLocaleString('fa-IR')}</span>
+                                <span class="step-title">${escapeHtml(step.title)}</span>
+                            </div>
+                            <div class="step-duration-badge">
+                                <span>⏱️</span>
+                                <span>${durationFormatted} ساعت</span>
+                            </div>
+                        </div>
+
+                        <!-- کادر گزارش رسمی دکل به اداره (کلیک مستقیم برای کپی متن گزارش) -->
+                        <div class="step-report-box" onclick="copyReportText(this.getAttribute('data-report'), this, event)" data-report="${escapeAttr(step.report)}">
+                            <div class="report-box-top">
+                                <span>📄 متن گزارش رسمی دکل به اداره:</span>
+                                <span class="click-copy-hint">📋 کلیک برای کپی</span>
+                            </div>
+                            <div class="step-report-text">${escapeHtml(step.report)}</div>
+                        </div>
+
+                        <!-- دکمه فلش‌دار کشویی برای باز و بستن نکات عملیاتی -->
+                        <button class="tips-toggle-btn" onclick="toggleStepTips(${step.id}, this, event)">
+                            <span class="tips-toggle-text">مشاهده نکات عملیاتی و ترفندهای سر چاه</span>
+                            <span class="tips-toggle-arrow">▼</span>
+                        </button>
+
+                        <!-- کادر نکات عملیاتی سر چاه (کلیک برای کپی جداگانه نکات) -->
+                        <div class="step-tips-box" id="tips-box-${step.id}" onclick="copyTipsText(this.getAttribute('data-tips'), this, event)" data-tips="${escapeAttr(step.tips || '')}">
+                            <div class="tips-box-top">
+                                <span>⚡ نکات فنی، ترفندها و احتیاطات سر چاه:</span>
+                                <span class="click-copy-hint" style="color: #fde68a;">💡 کلیک برای کپی</span>
+                            </div>
+                            <div class="step-tips-text">${step.tips ? escapeHtml(step.tips) : 'نکته‌ای برای این مرحله ثبت نشده است.'}</div>
+                        </div>
+
+                        <!-- سطر ابزارها و چک‌باکس انجام کار -->
+                        <div class="step-card-footer">
+                            <label class="step-check-label">
+                                <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleStepCheck(${phase.id}, ${step.id}, this.checked, event)">
+                                <span>${isCompleted ? '✅ انجام شد سر چاه' : 'انجام شد سر چاه'}</span>
+                            </label>
+
+                            <div class="step-action-btns">
+                                <button class="btn-mini-tool" title="ویرایش شکست کار" onclick="openEditStepModal(${phase.id}, ${step.id}, event)">✏️ ویرایش</button>
+                                <button class="btn-mini-tool" title="انتقال به بالا" onclick="moveStep(${phase.id}, ${sIdx}, -1, event)">⬆</button>
+                                <button class="btn-mini-tool" title="انتقال به پایین" onclick="moveStep(${phase.id}, ${sIdx}, 1, event)">⬇</button>
+                                <button class="btn-mini-tool delete" title="حذف" onclick="deleteStep(${phase.id}, ${step.id}, event)">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // آخرین دکمه درج در انتهای لیست
+            html += `
+                <div class="insert-divider">
+                    <button class="btn-insert-interstitial" onclick="openAddStepModal(${phase.id}, ${steps.length})">
+                        ➕ درج شکست کار در انتهای این فاز
+                    </button>
+                </div>
+            `;
         }
+
+        html += `
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn-back-to-phases" onclick="backToPhasesList()" style="width: 100%; justify-content: center; padding: 12px;">
+                    <span>◀ بازگشت به لیست فازها</span>
+                </button>
+            </div>
+        `;
+
+        container.innerHTML = html;
     }
 
-    function toggleStepComplete(id) {
-        const phase = getActivePhase();
-        if (!phase || !phase.steps) return;
-        const step = phase.steps.find(s => s.id === id);
+    // تغییر وضعیت چک‌باکس انجام کار
+    function toggleStepCheck(phaseId, stepId, isChecked, event) {
+        if (event) event.stopPropagation();
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) return;
+        const step = phase.steps.find(s => s.id === stepId);
         if (step) {
-            step.completed = !step.completed;
+            step.completed = isChecked;
             saveState();
-            renderSteps();
+            const card = document.getElementById('step-card-' + stepId);
+            if (card) {
+                if (isChecked) card.classList.add('completed');
+                else card.classList.remove('completed');
+            }
         }
     }
 
-    function copyMasterReport() {
-        const text = document.getElementById('master-report-text').innerText;
-        if (!text) return;
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('کل متن گزارش کپی شد! 📋');
-        }).catch(() => {
-            fallbackCopy(text);
-        });
-    }
-
-    function copyStepText(stepId) {
-        const phase = getActivePhase();
-        if (!phase || !phase.steps) return;
-        const s = phase.steps.find(item => item.id == stepId);
-        if (!s) return;
-        const txt = `${s.time ? `[${s.time}] ` : ''}${s.title}: ${s.report}`;
-        navigator.clipboard.writeText(txt).then(() => {
-            showToast('متن این خط کپی شد! 📋');
-        }).catch(() => fallbackCopy(txt));
-    }
-
-    function fallbackCopy(text) {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast('متن کپی شد! 📋');
-    }
-
-    // مودال افزودن و ویرایش فاز
+    // ================= عملیات فازها (افزودن / ویرایش / حذف / جابجایی) =================
     function openAddPhaseModal() {
+        document.getElementById('phase-form').reset();
+        document.getElementById('modal-phase-id').value = '';
         document.getElementById('phase-modal-title').innerText = 'افزودن فاز عملیاتی جدید';
-        document.getElementById('phase-form-id').value = '';
-        document.getElementById('phase-form-name').value = '';
-        document.getElementById('phase-form-desc').value = '';
         document.getElementById('phase-modal').classList.add('active');
     }
 
-    function openEditCurrentPhaseModal() {
-        const p = getActivePhase();
-        if (!p) return;
-        document.getElementById('phase-modal-title').innerText = 'ویرایش نام فاز عملیاتی';
-        document.getElementById('phase-form-id').value = p.id;
-        document.getElementById('phase-form-name').value = p.name;
-        document.getElementById('phase-form-desc').value = p.desc || '';
+    function openEditPhaseModal(phaseId, event) {
+        if (event) event.stopPropagation();
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) return;
+
+        document.getElementById('modal-phase-id').value = phase.id;
+        document.getElementById('modal-phase-name').value = phase.name;
+        document.getElementById('modal-phase-desc').value = phase.desc || '';
+        document.getElementById('phase-modal-title').innerText = 'ویرایش فاز عملیاتی';
         document.getElementById('phase-modal').classList.add('active');
     }
 
@@ -1632,19 +2031,18 @@
 
     document.getElementById('phase-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const idVal = document.getElementById('phase-form-id').value;
-        const nameVal = document.getElementById('phase-form-name').value.trim();
-        const descVal = document.getElementById('phase-form-desc').value.trim();
+        const idVal = document.getElementById('modal-phase-id').value;
+        const nameVal = document.getElementById('modal-phase-name').value.trim();
+        const descVal = document.getElementById('modal-phase-desc').value.trim();
 
         if (idVal) {
-            // ویرایش
-            const p = phases.find(item => item.id == idVal);
-            if (p) {
-                p.name = nameVal;
-                p.desc = descVal;
+            const phase = phases.find(p => p.id === parseInt(idVal, 10));
+            if (phase) {
+                phase.name = nameVal;
+                phase.desc = descVal;
+                showToast('فاز عملیاتی بروزرسانی شد ✏️');
             }
         } else {
-            // فاز جدید
             const newPhase = {
                 id: Date.now(),
                 name: nameVal,
@@ -1652,60 +2050,63 @@
                 steps: []
             };
             phases.push(newPhase);
-            currentPhaseId = newPhase.id;
+            showToast('فاز عملیاتی جدید اضافه شد ✅');
         }
 
         saveState();
+        renderOpsView();
         closePhaseModal();
-        renderPhaseSelector();
-        renderSteps();
-        showToast('فاز عملیاتی ذخیره شد ✅');
     });
 
-    function deleteCurrentPhase() {
-        const p = getActivePhase();
-        if (!p) return;
-        if (confirm(`آیا از حذف کامل فاز «${p.name}» و کلیه سطرهای آن مطمئن هستید؟`)) {
-            phases = phases.filter(item => item.id !== p.id);
-            if (phases.length > 0) currentPhaseId = phases[0].id;
-            else currentPhaseId = 0;
+    function deletePhase(phaseId, event) {
+        if (event) event.stopPropagation();
+        if (confirm('آیا از حذف این فاز عملیاتی و کلیه شکست کارهای آن مطمئن هستید؟')) {
+            phases = phases.filter(p => p.id !== phaseId);
+            if (selectedPhaseId === phaseId) selectedPhaseId = null;
             saveState();
-            renderPhaseSelector();
-            renderSteps();
+            renderOpsView();
             showToast('فاز عملیاتی حذف شد 🗑️');
         }
     }
 
-    // مودال افزودن و ویرایش سطر شکست کار
-    function openAddStepModal(insertIndex = -1) {
-        const p = getActivePhase();
-        if (!p) {
-            alert('لطفاً ابتدا یک فاز ایجاد یا انتخاب نمایید.');
-            return;
-        }
-        document.getElementById('step-modal-title').innerText = insertIndex >= 0 ? `درج سطر جدید در گام ${insertIndex + 1}` : 'افزودن سطر عملیاتی جدید';
-        document.getElementById('step-form-id').value = '';
-        document.getElementById('step-form-insert-index').value = insertIndex;
-        document.getElementById('step-form-title').value = '';
-        document.getElementById('step-form-time').value = '';
-        document.getElementById('step-form-report').value = '';
-        document.getElementById('step-form-tips').value = '';
+    function movePhase(index, direction, event) {
+        if (event) event.stopPropagation();
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= phases.length) return;
+
+        const temp = phases[index];
+        phases[index] = phases[targetIndex];
+        phases[targetIndex] = temp;
+
+        saveState();
+        renderOpsView();
+    }
+
+    // ================= عملیات شکست‌کارها (افزودن / ویرایش / حذف / جابجایی) =================
+    function openAddStepModal(phaseId, insertAtIndex = -1) {
+        document.getElementById('step-form').reset();
+        document.getElementById('modal-step-phase-id').value = phaseId;
+        document.getElementById('modal-step-id').value = '';
+        document.getElementById('modal-step-insert-index').value = insertAtIndex;
+        document.getElementById('step-modal-title').innerText = 'افزودن شکست کار جدید';
         document.getElementById('step-modal').classList.add('active');
     }
 
-    function openEditStepModal(id) {
-        const p = getActivePhase();
-        if (!p || !p.steps) return;
-        const step = p.steps.find(s => s.id === id);
+    function openEditStepModal(phaseId, stepId, event) {
+        if (event) event.stopPropagation();
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) return;
+        const step = phase.steps.find(s => s.id === stepId);
         if (!step) return;
 
-        document.getElementById('step-modal-title').innerText = 'ویرایش سطر عملیاتی';
-        document.getElementById('step-form-id').value = step.id;
-        document.getElementById('step-form-insert-index').value = -1;
-        document.getElementById('step-form-title').value = step.title;
-        document.getElementById('step-form-time').value = step.time || '';
-        document.getElementById('step-form-report').value = step.report;
-        document.getElementById('step-form-tips').value = step.tips;
+        document.getElementById('modal-step-phase-id').value = phaseId;
+        document.getElementById('modal-step-id').value = step.id;
+        document.getElementById('modal-step-insert-index').value = -1;
+        document.getElementById('modal-step-title').value = step.title;
+        document.getElementById('modal-step-duration').value = step.duration !== undefined ? step.duration : '';
+        document.getElementById('modal-step-report').value = step.report;
+        document.getElementById('modal-step-tips').value = step.tips || '';
+        document.getElementById('step-modal-title').innerText = 'ویرایش شکست کار';
         document.getElementById('step-modal').classList.add('active');
     }
 
@@ -1715,147 +2116,201 @@
 
     document.getElementById('step-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const p = getActivePhase();
-        if (!p) return;
-        if (!p.steps) p.steps = [];
+        const phaseId = parseInt(document.getElementById('modal-step-phase-id').value, 10);
+        const stepId = document.getElementById('modal-step-id').value;
+        const insertIndex = parseInt(document.getElementById('modal-step-insert-index').value, 10);
 
-        const idVal = document.getElementById('step-form-id').value;
-        const insertIdx = parseInt(document.getElementById('step-form-insert-index').value, 10);
-        const titleVal = document.getElementById('step-form-title').value.trim();
-        const timeVal = document.getElementById('step-form-time').value.trim();
-        const reportVal = document.getElementById('step-form-report').value.trim();
-        const tipsVal = document.getElementById('step-form-tips').value.trim();
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) return;
 
-        if (idVal) {
-            // ویرایش سطر
-            const step = p.steps.find(s => s.id == idVal);
+        const titleVal = document.getElementById('modal-step-title').value.trim();
+        const durationVal = parseFloat(document.getElementById('modal-step-duration').value) || 0;
+        const reportVal = document.getElementById('modal-step-report').value.trim();
+        const tipsVal = document.getElementById('modal-step-tips').value.trim();
+
+        if (stepId) {
+            const step = phase.steps.find(s => s.id === parseInt(stepId, 10));
             if (step) {
                 step.title = titleVal;
-                step.time = timeVal;
+                step.duration = durationVal;
                 step.report = reportVal;
                 step.tips = tipsVal;
+                showToast('شکست کار با موفقیت ویرایش شد ✏️');
             }
         } else {
-            // سطر جدید
             const newStep = {
                 id: Date.now(),
                 title: titleVal,
-                time: timeVal,
+                duration: durationVal,
                 report: reportVal,
                 tips: tipsVal,
                 completed: false
             };
-            if (insertIdx >= 0 && insertIdx <= p.steps.length) {
-                p.steps.splice(insertIdx, 0, newStep);
+
+            if (insertIndex >= 0 && insertIndex <= phase.steps.length) {
+                phase.steps.splice(insertIndex, 0, newStep);
             } else {
-                p.steps.push(newStep);
+                phase.steps.push(newStep);
             }
+            showToast('شکست کار با موفقیت ثبت شد ✅');
         }
 
         saveState();
+        renderOpsView();
         closeStepModal();
-        renderSteps();
-        showToast('سطر عملیاتی با موفقیت ثبت شد ✅');
     });
 
-    function moveStep(index, direction) {
-        const p = getActivePhase();
-        if (!p || !p.steps) return;
-        const target = index + direction;
-        if (target < 0 || target >= p.steps.length) return;
+    function deleteStep(phaseId, stepId, event) {
+        if (event) event.stopPropagation();
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) return;
 
-        const temp = p.steps[index];
-        p.steps[index] = p.steps[target];
-        p.steps[target] = temp;
-
-        saveState();
-        renderSteps();
-    }
-
-    function deleteStep(id) {
-        const p = getActivePhase();
-        if (!p || !p.steps) return;
-        if (confirm('آیا از حذف این سطر عملیاتی مطمئن هستید؟')) {
-            p.steps = p.steps.filter(s => s.id !== id);
+        if (confirm('آیا از حذف این شکست کار مطمئن هستید؟')) {
+            phase.steps = phase.steps.filter(s => s.id !== stepId);
             saveState();
-            renderSteps();
-            showToast('سطر حذف شد 🗑️');
+            renderOpsView();
+            showToast('شکست کار حذف شد 🗑️');
         }
     }
 
-    // ================= فرمول‌های کاربردی =================
+    function moveStep(phaseId, index, direction, event) {
+        if (event) event.stopPropagation();
+        const phase = phases.find(p => p.id === phaseId);
+        if (!phase) return;
+
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= phase.steps.length) return;
+
+        const temp = phase.steps[index];
+        phase.steps[index] = phase.steps[targetIndex];
+        phase.steps[targetIndex] = temp;
+
+        saveState();
+        renderOpsView();
+    }
+
+    // ================= فرمول‌های کاربردی با کسر ریاضی و معادله واحدها =================
+    function renderMathBox(left, factor, top, bot, extra) {
+        let html = '<div class="math-box-container"><div class="math-formula-row">';
+        html += `<span class="math-var">${escapeHtml(left)}</span>`;
+        html += `<span class="math-op">&nbsp;=&nbsp;</span>`;
+        if (factor && factor.trim()) {
+            html += `<span class="math-num">${escapeHtml(factor)}</span><span class="math-op">&nbsp;×&nbsp;</span>`;
+        }
+        if (top && bot && bot.trim()) {
+            html += `<div class="math-frac"><div class="math-top">${escapeHtml(top)}</div><div class="math-bot">${escapeHtml(bot)}</div></div>`;
+        } else if (top) {
+            html += `<span style="padding: 2px 6px;">${escapeHtml(top)}</span>`;
+        }
+        if (extra && extra.trim()) {
+            html += `<span style="color: #cbd5e1; margin-right: 6px;">&nbsp;${escapeHtml(extra)}</span>`;
+        }
+        html += '</div></div>';
+        return html;
+    }
+
+    function renderUnitBox(left, factor, top, bot, extra) {
+        let html = '<div class="unit-box-container"><div class="unit-formula-row">';
+        html += `<span class="unit-var">${escapeHtml(left)}</span>`;
+        html += `<span class="math-op" style="color: #6ee7b7;">&nbsp;=&nbsp;</span>`;
+        if (factor && factor.trim()) {
+            html += `<span style="color: #fde68a;">${escapeHtml(factor)}</span><span class="math-op" style="color: #6ee7b7;">&nbsp;×&nbsp;</span>`;
+        }
+        if (top && bot && bot.trim()) {
+            html += `<div class="math-frac"><div class="unit-top">${escapeHtml(top)}</div><div class="unit-bot">${escapeHtml(bot)}</div></div>`;
+        } else if (top) {
+            html += `<span style="padding: 2px 6px;">${escapeHtml(top)}</span>`;
+        }
+        if (extra && extra.trim()) {
+            html += `<span style="color: #6ee7b7; margin-right: 6px;">&nbsp;${escapeHtml(extra)}</span>`;
+        }
+        html += '</div></div>';
+        return html;
+    }
+
     function renderFormulas() {
         const container = document.getElementById('formulas-container');
-        container.innerHTML = '';
+        if (!container) return;
+        const query = (document.getElementById('formula-search')?.value || '').toLowerCase();
 
-        if (formulas.length === 0) {
-            container.innerHTML = '<div class="empty-state">هنوز فرمولی ثبت نشده است.</div>';
+        let filtered = formulas;
+        if (query) {
+            filtered = formulas.filter(f => 
+                f.title.toLowerCase().includes(query) || 
+                (f.desc && f.desc.toLowerCase().includes(query)) ||
+                (f.mathLeft && f.mathLeft.toLowerCase().includes(query)) ||
+                (f.unitLeft && f.unitLeft.toLowerCase().includes(query))
+            );
+        }
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="empty-state">فرمولی مطابق جستجوی شما یافت نشد.</div>';
             return;
         }
 
-        formulas.forEach((item, idx) => {
-            const card = document.createElement('div');
-            card.className = 'formula-card';
+        let html = '';
+        filtered.forEach(item => {
+            const mathBoxHtml = renderMathBox(item.mathLeft, item.mathFactor, item.mathTop, item.mathBot, item.mathExtra);
+            const unitBoxHtml = renderUnitBox(item.unitLeft, item.unitFactor, item.unitTop, item.unitBot, item.unitExtra);
 
-            let paramRows = '';
-            if (item.params && item.params.length > 0) {
-                paramRows = `
-                    <table class="param-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 20%; text-align: center;">نماد</th>
-                                <th>شرح پارامتر</th>
-                                <th style="width: 25%; text-align: center;">واحد رایج</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${item.params.map(p => `
-                                <tr>
-                                    <td class="param-sym">${p.sym}</td>
-                                    <td>${p.name}</td>
-                                    <td class="param-unit">${p.unit}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            }
-
-            // ساخت خط کسری زیبا و استاندارد
-            let formulaHtml = '';
-            if (item.bot) {
-                formulaHtml = `
-                    <div class="formula-box">
-                        <span>${item.left}</span>&nbsp;
-                        <span class="frac">
-                            <span class="top">${item.top}</span>
-                            <span class="bot">${item.bot}</span>
-                        </span>
-                        ${item.extraRight ? `&nbsp;<span>${item.extraRight}</span>` : ''}
+            html += `
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <div class="formula-title">${escapeHtml(item.title)}</div>
+                        <div style="display: flex; gap: 4px;">
+                            <button class="btn-mini-tool" onclick="openEditFormulaModal(${item.id})">✏️ ویرایش</button>
+                            <button class="btn-mini-tool delete" onclick="deleteFormula(${item.id})">🗑️ حذف</button>
+                        </div>
                     </div>
-                `;
-            } else {
-                formulaHtml = `
-                    <div class="formula-box">
-                        <span>${item.left}</span>&nbsp;<span>${item.top}</span>
-                    </div>
-                `;
-            }
 
-            card.innerHTML = `
-                <div class="formula-header">
-                    <div class="formula-title">${item.title}</div>
-                    <button class="btn-card-icon delete" onclick="deleteFormula(${item.id})">حذف 🗑️</button>
+                    <!-- ۱. فرمول ریاضی محاسباتی -->
+                    <div style="font-size: 0.76rem; color: #38bdf8; font-weight: 800; margin-bottom: 2px;">📐 فرمول ریاضی مهندسی:</div>
+                    ${mathBoxHtml}
+
+                    <!-- ۲. معادله واحدهای متناظر با همان ساختار کسری و ضرب و تقسیم -->
+                    <div style="font-size: 0.76rem; color: #34d399; font-weight: 800; margin-bottom: 2px;">📏 معادله واحدهای متناظر (آنالیز ابعادی واحدها):</div>
+                    ${unitBoxHtml}
+
+                    ${item.desc ? `
+                        <div class="formula-desc-box">
+                            <strong style="color: #38bdf8; display: block; margin-bottom: 4px;">📝 تعاریف و راهنمای پارامترها:</strong>
+                            ${escapeHtml(item.desc)}
+                        </div>
+                    ` : ''}
                 </div>
-                ${formulaHtml}
-                ${paramRows}
             `;
-            container.appendChild(card);
         });
+
+        container.innerHTML = html;
     }
 
     function openAddFormulaModal() {
         document.getElementById('formula-form').reset();
+        document.getElementById('modal-formula-id').value = '';
+        document.getElementById('formula-modal-title').innerText = 'افزودن فرمول کاربردی جدید';
+        document.getElementById('formula-modal').classList.add('active');
+    }
+
+    function openEditFormulaModal(id) {
+        const item = formulas.find(f => f.id === id);
+        if (!item) return;
+
+        document.getElementById('modal-formula-id').value = item.id;
+        document.getElementById('modal-formula-title').value = item.title;
+        document.getElementById('modal-math-left').value = item.mathLeft || '';
+        document.getElementById('modal-math-factor').value = item.mathFactor || '';
+        document.getElementById('modal-math-top').value = item.mathTop || '';
+        document.getElementById('modal-math-bot').value = item.mathBot || '';
+        document.getElementById('modal-math-extra').value = item.mathExtra || '';
+
+        document.getElementById('modal-unit-left').value = item.unitLeft || '';
+        document.getElementById('modal-unit-factor').value = item.unitFactor || '';
+        document.getElementById('modal-unit-top').value = item.unitTop || '';
+        document.getElementById('modal-unit-bot').value = item.unitBot || '';
+        document.getElementById('modal-unit-extra').value = item.unitExtra || '';
+
+        document.getElementById('modal-formula-desc').value = item.desc || '';
+        document.getElementById('formula-modal-title').innerText = 'ویرایش فرمول و واحدهای متناظر';
         document.getElementById('formula-modal').classList.add('active');
     }
 
@@ -1865,40 +2320,35 @@
 
     document.getElementById('formula-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const titleVal = document.getElementById('formula-title').value.trim();
-        const leftVal = document.getElementById('formula-left').value.trim();
-        const topVal = document.getElementById('formula-top').value.trim();
-        const botVal = document.getElementById('formula-bot').value.trim();
-        const paramsRaw = document.getElementById('formula-params').value.trim();
-
-        const paramsList = [];
-        if (paramsRaw) {
-            paramsRaw.split('\n').forEach(line => {
-                const parts = line.split('|').map(p => p.trim());
-                if (parts[0]) {
-                    paramsList.push({
-                        sym: parts[0],
-                        name: parts[1] || '-',
-                        unit: parts[2] || '-'
-                    });
-                }
-            });
-        }
-
-        const newFormula = {
-            id: Date.now(),
-            title: titleVal,
-            left: leftVal,
-            top: topVal,
-            bot: botVal,
-            params: paramsList
+        const idVal = document.getElementById('modal-formula-id').value;
+        const formulaObj = {
+            id: idVal ? parseInt(idVal, 10) : Date.now(),
+            title: document.getElementById('modal-formula-title').value.trim(),
+            mathLeft: document.getElementById('modal-math-left').value.trim(),
+            mathFactor: document.getElementById('modal-math-factor').value.trim(),
+            mathTop: document.getElementById('modal-math-top').value.trim(),
+            mathBot: document.getElementById('modal-math-bot').value.trim(),
+            mathExtra: document.getElementById('modal-math-extra').value.trim(),
+            unitLeft: document.getElementById('modal-unit-left').value.trim(),
+            unitFactor: document.getElementById('modal-unit-factor').value.trim(),
+            unitTop: document.getElementById('modal-unit-top').value.trim(),
+            unitBot: document.getElementById('modal-unit-bot').value.trim(),
+            unitExtra: document.getElementById('modal-unit-extra').value.trim(),
+            desc: document.getElementById('modal-formula-desc').value.trim()
         };
 
-        formulas.push(newFormula);
+        if (idVal) {
+            const idx = formulas.findIndex(f => f.id === parseInt(idVal, 10));
+            if (idx !== -1) formulas[idx] = formulaObj;
+            showToast('فرمول و واحدهای آن بروزرسانی شد ✏️');
+        } else {
+            formulas.push(formulaObj);
+            showToast('فرمول جدید با موفقیت اضافه شد ✅');
+        }
+
         saveState();
-        closeFormulaModal();
         renderFormulas();
-        showToast('فرمول جدید ذخیره شد 📐');
+        closeFormulaModal();
     });
 
     function deleteFormula(id) {
@@ -1910,35 +2360,58 @@
         }
     }
 
-    // ================= نکات عمومی =================
+    // ================= نکات عمومی سر چاه =================
     function renderTips() {
         const container = document.getElementById('tips-container');
-        container.innerHTML = '';
+        if (!container) return;
+        const query = (document.getElementById('tip-search')?.value || '').toLowerCase();
 
-        if (tips.length === 0) {
-            container.innerHTML = '<div class="empty-state">هنوز نکته‌ای ثبت نشده است.</div>';
+        let filtered = tips;
+        if (query) {
+            filtered = tips.filter(t => 
+                t.title.toLowerCase().includes(query) || 
+                t.text.toLowerCase().includes(query)
+            );
+        }
+
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="empty-state">نکته‌ای مطابق جستجو یافت نشد.</div>';
             return;
         }
 
-        tips.forEach(t => {
-            const card = document.createElement('div');
-            card.className = 'tip-card';
-            card.innerHTML = `
-                <div class="tip-card-header">
-                    <div class="tip-card-title">
-                        <span>💡</span>
-                        <span>${t.title}</span>
+        let html = '';
+        filtered.forEach(item => {
+            html += `
+                <div class="tip-card">
+                    <div class="tip-card-header">
+                        <div class="tip-card-title">${escapeHtml(item.title)}</div>
+                        <div style="display: flex; gap: 4px;">
+                            <button class="btn-mini-tool" onclick="openEditTipModal(${item.id})">✏️ ویرایش</button>
+                            <button class="btn-mini-tool delete" onclick="deleteTip(${item.id})">🗑️ حذف</button>
+                        </div>
                     </div>
-                    <button class="btn-card-icon delete" onclick="deleteTip(${t.id})">حذف 🗑️</button>
+                    <div class="tip-card-text">${escapeHtml(item.text)}</div>
                 </div>
-                <div class="tip-card-body">${t.desc.replace(/\\n/g, '<br>')}</div>
             `;
-            container.appendChild(card);
         });
+        container.innerHTML = html;
     }
 
     function openAddTipModal() {
         document.getElementById('tip-form').reset();
+        document.getElementById('modal-tip-id').value = '';
+        document.getElementById('tip-modal-title').innerText = 'افزودن نکته عمومی سر چاه';
+        document.getElementById('tip-modal').classList.add('active');
+    }
+
+    function openEditTipModal(id) {
+        const item = tips.find(t => t.id === id);
+        if (!item) return;
+
+        document.getElementById('modal-tip-id').value = item.id;
+        document.getElementById('modal-tip-title').value = item.title;
+        document.getElementById('modal-tip-text').value = item.text;
+        document.getElementById('tip-modal-title').innerText = 'ویرایش نکته عمومی';
         document.getElementById('tip-modal').classList.add('active');
     }
 
@@ -1948,19 +2421,25 @@
 
     document.getElementById('tip-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const titleVal = document.getElementById('tip-title').value.trim();
-        const descVal = document.getElementById('tip-desc').value.trim();
+        const idVal = document.getElementById('modal-tip-id').value;
+        const titleVal = document.getElementById('modal-tip-title').value.trim();
+        const textVal = document.getElementById('modal-tip-text').value.trim();
 
-        tips.push({
-            id: Date.now(),
-            title: titleVal,
-            desc: descVal
-        });
+        if (idVal) {
+            const item = tips.find(t => t.id === parseInt(idVal, 10));
+            if (item) {
+                item.title = titleVal;
+                item.text = textVal;
+                showToast('نکته با موفقیت بروزرسانی شد ✏️');
+            }
+        } else {
+            tips.push({ id: Date.now(), title: titleVal, text: textVal });
+            showToast('نکته جدید با موفقیت ذخیره شد ✅');
+        }
 
         saveState();
-        closeTipModal();
         renderTips();
-        showToast('نکته جدید ثبت شد 💡');
+        closeTipModal();
     });
 
     function deleteTip(id) {
@@ -1972,20 +2451,19 @@
         }
     }
 
-    // ================= پشتیبان‌گیری و بازیابی =================
+    // ================= پشتیبان‌گیری و بازنشانی =================
     function exportData() {
         const data = {
             phases: phases,
             formulas: formulas,
             tips: tips,
-            currentPhaseId: currentPhaseId,
             exportDate: new Date().toLocaleDateString('fa-IR')
         };
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `backup-welltesting-notes-${Date.now()}.json`;
+        a.download = `backup-welltest-notes-${Date.now()}.json`;
         a.click();
         URL.revokeObjectURL(url);
         showToast('فایل پشتیبان دانلود شد 💾');
@@ -2003,12 +2481,13 @@
                     phases = imported.phases || [];
                     formulas = imported.formulas || [];
                     tips = imported.tips || [];
-                    if (imported.currentPhaseId) currentPhaseId = imported.currentPhaseId;
                     saveState();
-                    renderAll();
+                    renderOpsView();
+                    renderFormulas();
+                    renderTips();
                     showToast('اطلاعات با موفقیت بازیابی شد ✅');
                 } else {
-                    alert('فرمت فایل پشتیبان معتبر نیست.');
+                    alert('فرمت فایل معتبر نیست.');
                 }
             } catch (err) {
                 alert('خطا در خواندن فایل.');
@@ -2018,32 +2497,48 @@
     }
 
     function resetToDefaults() {
-        if (confirm('آیا می‌خواهید کلیه فازها، گزارشات و فرمول‌ها به تمپلیت استاندارد اولیه بازنشانی شوند؟')) {
+        if (confirm('آیا مایلید تمپلیت پیش‌فرض چاه‌آزمایی (فازها، شکست‌کارها و فرمول‌ها) مجدداً بارگذاری شوند؟')) {
             phases = JSON.parse(JSON.stringify(initialPhases));
             formulas = JSON.parse(JSON.stringify(initialFormulas));
             tips = JSON.parse(JSON.stringify(initialTips));
-            currentPhaseId = phases[0].id;
+            selectedPhaseId = null;
             saveState();
-            renderAll();
-            showToast('اطلاعات اولیه مجدداً بارگذاری شد 🔄');
+            renderOpsView();
+            renderFormulas();
+            renderTips();
+            showToast('اطلاعات پیش‌فرض بارگذاری شد 🔄');
         }
     }
 
-    function renderAll() {
-        renderPhaseSelector();
-        renderSteps();
-        renderFormulas();
-        renderTips();
+    // ابزارهای کمکی فرار کاراکترها
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 
-    // بستن مودال با کلیک روی پس‌زمینه
+    function escapeAttr(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    // بستن مودال‌ها با کلیک روی پس‌زمینه
     window.addEventListener('click', function(e) {
         if (e.target.classList.contains('modal-overlay')) {
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+            e.target.classList.remove('active');
         }
     });
 
-    // وضعیت شبکه
+    // رویدادهای همگام‌سازی ابری
     window.addEventListener('online', () => {
         showToast('اینترنت متصل شد؛ در حال همگام‌سازی... 🔄');
         if (hasPendingSync) pushToCloud();
@@ -2051,11 +2546,28 @@
     });
 
     window.addEventListener('offline', () => {
-        updateSyncBadge('offline', '⚠️ آفلاین (حافظه گوشی)');
+        updateSyncBadge('offline', '⚠️ آفلاین (اطلاعات در گوشی امن است)');
     });
 
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            if (hasPendingSync) pushToCloud();
+            else pullFromCloud(true);
+        }
+    });
+
+    // بررسی پس‌زمینه هر ۲۰ ثانیه
+    setInterval(() => {
+        if (navigator.onLine) {
+            if (hasPendingSync) pushToCloud();
+            else pullFromCloud(true);
+        }
+    }, 20000);
+
     // بارگذاری اولیه
-    renderAll();
+    renderOpsView();
+    renderFormulas();
+    renderTips();
     pullFromCloud(false);
 </script>
 
